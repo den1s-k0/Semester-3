@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Formatter;
 import static java.lang.Math.sinh;
+import java.math.BigInteger;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,5 +50,15 @@ class CalculateTailor extends Tailor{
             component *= (double) (x * x) / ((2 * i - 1) * (2 * i - 2));
         }
         return sum;
+    }
+}
+
+class BigTailor{
+    public static double CalculateBigE(int k){
+        return 0;
+    }
+
+    public static void main(String[] args){
+
     }
 }

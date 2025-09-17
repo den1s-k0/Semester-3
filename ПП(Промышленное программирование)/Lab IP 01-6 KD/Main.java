@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.lang.Math;
-
+import java.util.Formatter;
 import static java.lang.Math.sinh;
 
 public class Main {
@@ -8,15 +7,10 @@ public class Main {
 
         System.out.println("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-
-            System.out.println("i = " + i);
-        }
     }
 }
 
 class Tailor {
-
     public static double CalculateE(int k){
         double E = 1;
         for(int i = 0; i < k; i++)
@@ -26,16 +20,22 @@ class Tailor {
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
+        Formatter fmt = new Formatter();
 
-        System.out.print("Введите x: ");
+        System.out.print("Enter x: ");
         long x = in.nextLong();
-        System.out.print("Введите k: ");
+        System.out.print("Enter k: ");
         int k = in.nextInt();
         double e = CalculateE(k);
-        System.out.printf("%.12f", CalculateTailor.CalculateSum(x, e));
-        System.out.print("\n" + sinh(x));
+        double res = CalculateTailor.CalculateSum(x, e);
+        fmt.format("Dec x: %d \nHex x: %x \nOctal x: %o \n", x, x, x);
+        System.out.print(fmt);
+        System.out.printf("Result Tailor: %.12e \n", res);
+        System.out.println("Result Built-in: " + sinh(x));
+
 
         in.close();
+        fmt.close();
     }
 
 }

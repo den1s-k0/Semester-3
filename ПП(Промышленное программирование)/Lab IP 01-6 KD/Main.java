@@ -2,6 +2,9 @@ import java.util.Scanner;
 import java.util.Formatter;
 import static java.lang.Math.sinh;
 import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -54,11 +57,59 @@ class CalculateTailor extends Tailor{
 }
 
 class BigTailor{
-    public static double CalculateBigE(int k){
-        return 0;
+    public static BigDecimal CalculateBigE(BigInteger k){
+        int scale = k.intValue() + 50;
+        MathContext mc = new MathContext(scale);
+
+        BigDecimal E = BigDecimal.valueOf(1);
+        BigDecimal T = BigDecimal.valueOf(10);
+        BigInteger O = BigInteger.valueOf(1);
+        BigInteger i = BigInteger.valueOf(0);
+
+        while(i.compareTo(k) < 0){
+            E = E.divide(T, mc);
+            i = i.add(O);
+        }
+
+        return E;
     }
 
     public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        BigDecimal x = BigDecimal.valueOf(0);
+        BigInteger k = BigInteger.valueOf(0);
+        BigDecimal e = BigDecimal.valueOf(0);
 
+        System.out.print("Enter x: ");
+        x = in.nextBigDecimal();
+        System.out.print("Enter k: ");
+        k = in.nextBigInteger();
+        e = CalculateBigE(k);
+        BigDecimal res = CalculateBigTailor.CalculateBigSum(x, e, k);
+        System.out.printf("Result Tailor: " + res + "\n");
+        System.out.println("Result Built-in: " + sinh(x.doubleValue()));
+
+        in.close();
+    }
+}
+
+class CalculateBigTailor extends BigTailor{
+    public static BigDecimal CalculateBigSum(BigDecimal x, BigDecimal e, BigInteger k){
+        BigDecimal sum = BigDecimal.valueOf(0);
+        BigDecimal component = x;
+        int scale = k.intValue() + 50;
+        MathContext mc = new MathContext(scale);
+        //component *= (double) (x * x) / ((2 * i - 1) * (2 * i - 2));
+
+        BigDecimal i = BigDecimal.valueOf(2);
+
+        while(component.compareTo(e) > 0){
+            sum = sum.add(component);
+            component = component.multiply(x.multiply(x));
+            component = (component.divide((i.multiply(BigDecimal.valueOf(2))).subtract(BigDecimal.valueOf(1)), mc))
+                    .divide((i.multiply(BigDecimal.valueOf(2))).subtract(BigDecimal.valueOf(2)), mc);
+            i = i.add(BigDecimal.valueOf(1));
+        }
+        return sum;
     }
 }

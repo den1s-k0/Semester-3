@@ -1,7 +1,7 @@
 #include "header.h"
 
 ostream& operator <<(ostream& out, employee& a) {
-	return out << "ID: " << a.num << "\nEmployee name: " << a.name << "\nNumber of hours: " << a.hours << endl;
+	return out << a.num << a.name << a.hours << endl;
 }
 
 istream& operator >>(istream& in, employee& a) {

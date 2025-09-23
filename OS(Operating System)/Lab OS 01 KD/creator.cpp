@@ -1,21 +1,17 @@
-#include <iostream>
-#include <windows.h>
-#include <fstream>
-#include <string>
 #include "header.h"
 
 
 int main(int argc, char* argv[]) {
 	ofstream out(argv[1], ios::binary);
 	if (!out.is_open()) {
-		cout << "Error\nFile isn't open";
+		cout << "Error\nBinFile isn't create";
+		return 0;
 	}
-	else {
-		employee tipok;
-		for (int i = 0; i < stoi(argv[2]); i++) {
-			cin >> tipok;
-			out << tipok;
-		}
+	employee tipok;
+	for (int i = 0; i < stoi(argv[2]); i++) {
+		cin >> tipok;
+		out.write(reinterpret_cast<char*>(&tipok), sizeof(employee));
 	}
 	out.close();
+	return 0;
 }

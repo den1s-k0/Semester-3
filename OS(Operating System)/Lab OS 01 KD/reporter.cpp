@@ -16,18 +16,20 @@ int main(int argc, char* argv[]) {
 	int i = 1;
 	double salary;
 	int hourly_rate = stoi(argv[3]);
-	out << setw(5)
-		<< setw(5) << "ID" << " | "
+	out << setw(8) << right << "| "
+		<< setw(10) << "ID" << " | "
 		<< setw(10) << "Name" << " | "
-		<< setw(5) << "Hours" << " | "
-		<< setw(6) <<  "Salary";
+		<< setw(10) << "Hours" << " | "
+		<< setw(10) << "Salary" << endl
+		<< string(57, '-') << endl;
 	while (in.read(reinterpret_cast<char*>(&tipok), sizeof(employee))) {
 		salary = hourly_rate * tipok.hours;
-		out << setw(5) << to_string(i) + "."
-			<< setw(5) << tipok.num << " | "
+		out << setw(5) << to_string(i) + "." << " | "
+			<< setw(10) << tipok.num << " | "
 			<< setw(10) << tipok.name << " | "
-			<< setw(5) << tipok.hours << " | "
-			<< setw(6) << fixed << setprecision(2) << salary;
+			<< setw(10) << tipok.hours << " | "
+			<< setw(10) << fixed << setprecision(2) << salary
+			<< endl;
 		i++;
 	}
 	in.close();

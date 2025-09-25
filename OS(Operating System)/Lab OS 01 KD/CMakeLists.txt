@@ -12,9 +12,9 @@ endif()
 project ("Lab OS 01 KD")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (Main "main.cpp" "header.h" "employee.cpp")
-add_executable (Creator "header.h" "creator.cpp"  "employee.cpp")
-add_executable (Reporter  "header.h"  "reporter.cpp" "employee.cpp")
+add_executable (Main "main.cpp" "header.h" "employee.cpp" "function.cpp")
+add_executable (Creator "creator.cpp" "header.h" "employee.cpp")
+add_executable (Reporter "reporter.cpp" "header.h" "employee.cpp")
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

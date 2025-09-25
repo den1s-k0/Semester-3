@@ -14,3 +14,9 @@ struct employee {
 };
 ostream& operator <<(ostream& out, employee& a);
 istream& operator >>(istream& in, employee& a);
+
+bool startProcess(string address);
+
+bool readBinFile(string NAME);
+
+bool readTextFile(string NAME);

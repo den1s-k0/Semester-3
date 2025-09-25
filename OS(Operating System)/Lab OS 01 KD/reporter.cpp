@@ -6,11 +6,11 @@ int main(int argc, char* argv[]) {
 	ofstream out(argv[2]);
 	if(!in.is_open()){
 		cout << "Error\nBinFile isn't open";
-		return 0;
+		return 1;
 	}
 	if(!out.is_open()){
 		cout << "Error\nTextFile isn't create";
-		return 0;
+		return 2;
 	}
 	employee tipok;
 	int i = 1;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 		out << setw(5) << to_string(i) + "." << " | "
 			<< setw(10) << tipok.num << " | "
 			<< setw(10) << tipok.name << " | "
-			<< setw(10) << tipok.hours << " | "
+			<< setw(10) << fixed << setprecision(2) << tipok.hours << " | "
 			<< setw(10) << fixed << setprecision(2) << salary
 			<< endl;
 		i++;

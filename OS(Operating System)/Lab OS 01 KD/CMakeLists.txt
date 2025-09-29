@@ -1,4 +1,4 @@
-# CMakeList.txt: проект CMake для Lab OS 01 KD; включите исходный код и определения,
+﻿# CMakeList.txt: проект CMake для Lab OS 01 KD; включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -11,16 +11,27 @@ endif()
 
 project ("Lab OS 01 KD")
 
-# Добавьте источник в исполняемый файл этого проекта.
-add_executable (Main "main.cpp" "header.h" "employee.cpp" "function.cpp")
-add_executable (Creator "creator.cpp" "header.h" "employee.cpp")
-add_executable (Reporter "reporter.cpp" "header.h" "employee.cpp")
+function(add_exe target_name source_file extra_sources)
+    add_executable(${target_name}
+        ${source_file}
+        ${extra_sources}
+    )
+	if (CMAKE_VERSION VERSION_GREATER 3.12)
+		set_property(TARGET ${target_name} PROPERTY CXX_STANDARD 20)
+	endif()
+endfunction()
 
+add_exe(Main main.cpp "header.h;employee.cpp;function.cpp")
+add_exe(Creator creator.cpp "header.h;employee.cpp")
+add_exe(Reporter reporter.cpp "header.h;employee.cpp")
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Main PROPERTY CXX_STANDARD 20)
-  set_property(TARGET Creator PROPERTY CXX_STANDARD 20)
-  set_property(TARGET Reporter PROPERTY CXX_STANDARD 20)
-endif()
+# Поддиректория с тестами
 
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+add_subdirectory(tests)

@@ -29,8 +29,20 @@ TEST_P(EmployeeConstructorTest, InitializesCorrectly) {
     EXPECT_STREQ(e.name, expected_name);
 }
 
+TEST(EmployeeTest, InitializesLongNameCorrectly) {
+    employee e(1, "TooLongNameForMyFile", 5);
+    EXPECT_EQ(e.num, 1);
+    EXPECT_EQ(e.hours, 5);
+    EXPECT_STREQ(e.name, "TooLongN*");
+}
 
-// Тест конструктора по умолчанию
+TEST(EmployeeTest, InitializesMaxNameCorrectly) {
+    employee e(-1, "LongName9", -5);
+    EXPECT_EQ(e.num, -1);
+    EXPECT_EQ(e.hours, -5);
+    EXPECT_STREQ(e.name, "LongName9");
+}
+
 TEST(EmployeeTest, DefaultConstructor) {
     employee e;
     EXPECT_EQ(e.num, 0);

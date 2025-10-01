@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -22,6 +24,6 @@ istream& operator >>(istream& in, employee& a);
 
 bool startProcess(string address);
 
-bool readBinFile(string NAME);
+bool ReadBinFile(string NAME);
 
-bool readTextFile(string NAME);
+bool ReadTxtFile(string NAME);

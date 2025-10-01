@@ -12,6 +12,7 @@ employee::employee(int n, const char* nm, double h) : num(n), hours(h) {
 }
 
 ostream& operator <<(ostream& out, employee& a) {
+	out << fixed << setprecision(2);
 	return out << "ID: " << a.num << "\t Name: " << a.name << "\t Number of hours: " << a.hours << endl;
 }
 

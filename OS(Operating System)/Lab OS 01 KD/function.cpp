@@ -22,10 +22,10 @@ bool startProcess(string address) {
 	return 2;
 }
 
-bool readBinFile(string NAME) {
+bool ReadBinFile(string NAME) {
 	ifstream in(NAME, ios::binary);
 	if (!in.is_open()) {
-		cout << "Error\nBinFile isn't open";
+		cerr << "Error\nBinFile isn't open";
 		return 1;
 	}
 	employee tipok;
@@ -36,10 +36,10 @@ bool readBinFile(string NAME) {
 	in.close();
 }
 
-bool readTextFile(string NAME) {
+bool ReadTxtFile(string NAME) {
 	ifstream in(NAME);
 	if (!in.is_open()) {
-		cout << "Error\nTextFile isn't open";
+		cerr << "Error\nTextFile isn't open";
 		return 1;
 	}
 	string line;

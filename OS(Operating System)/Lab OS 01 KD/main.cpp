@@ -14,7 +14,7 @@ int main()
 
 	BinAddress = "Creator.exe " + BinName + " " + to_string(employeeNumber);
 	startProcess(BinAddress);
-	readBinFile(BinName);
+	ReadBinFile(BinName);
 
 	cout << "\nEnter report-file name: ";
 	cin >> ReportName;
@@ -24,7 +24,7 @@ int main()
 
 	ReportAddress = "Reporter.exe " + BinName + " " + ReportName + " " + to_string(hourly_rate);
 	startProcess(ReportAddress);
-	readTextFile(ReportName);
+	ReadTxtFile(ReportName);
 
 	return 0;
 }

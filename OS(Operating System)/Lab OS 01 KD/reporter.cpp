@@ -5,11 +5,11 @@ int main(int argc, char* argv[]) {
 	ifstream in(argv[1], ios::binary);
 	ofstream out(argv[2]);
 	if(!in.is_open()){
-		cout << "Error\nBinFile isn't open";
+		cerr << "Error\nBinFile isn't open";
 		return 1;
 	}
 	if(!out.is_open()){
-		cout << "Error\nTextFile isn't create";
+		cerr << "Error\nTextFile isn't create";
 		return 2;
 	}
 	employee tipok;

@@ -1,12 +1,8 @@
-#include <gtest/gtest.h>
-#include <tuple>
-#include "../header.h"
-
-class EmployeeConstructorTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+#include "test_header.h"
 
 // Набор тестовых данных
 INSTANTIATE_TEST_SUITE_P(
-    VariousInputs,
+    VariousEmployeeInputs,
     EmployeeConstructorTest,
     ::testing::Values(
         make_tuple(1, "Denis", 10.5),

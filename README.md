@@ -35,7 +35,7 @@
 10. Использовать  для вывода спецификатор минимальной ширины поля и спецификатор точности в методе System.out.println().
 
 ### Индивидуальное задание:
-![Гиперболический синус](https://github.com/den1s-k0/Semester-3/blob/60df1e9ff01f4f014624d0317bd7f3cd0a6ba2a3/%D0%9F%D0%9F(%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)/Lab%20IP%2001-6%20KD/Lab%20IP%2001-6%20KD.png)
+![Гиперболический синус](https://github.com/den1s-k0/Semester-3/blob/8a4e383658df96002eafb6968b9b235fed683c9e/IP(Industrial%20Programming)/Lab%20IP%2001-6%20KD/Lab%20IP%2001-6%20KD.png)
 
 ## Лабораторная работа 1.1: UNIT-тестирование.
 

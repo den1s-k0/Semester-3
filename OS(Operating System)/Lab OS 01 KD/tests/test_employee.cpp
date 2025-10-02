@@ -3,7 +3,7 @@
 // Набор тестовых данных
 INSTANTIATE_TEST_SUITE_P(
     VariousEmployeeInputs,
-    EmployeeConstructorTest,
+    EmployeeControlTest,
     ::testing::Values(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
@@ -13,7 +13,7 @@ INSTANTIATE_TEST_SUITE_P(
     )
 );
 
-TEST_P(EmployeeConstructorTest, InitializesCorrectly) {
+TEST_P(EmployeeControlTest, InitializesCorrectly) {
     int expected_num = get<0>(GetParam());
     const char* expected_name = get<1>(GetParam());
     double expected_hours = get<2>(GetParam());

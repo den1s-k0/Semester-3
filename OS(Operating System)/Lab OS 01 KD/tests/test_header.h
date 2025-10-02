@@ -2,10 +2,17 @@
 
 #include <gtest/gtest.h>
 #include <tuple>
+#include <filesystem>
 #include "../header.h"
 
-class EmployeeConstructorTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+void WriteBinFile(string BinFileName, employee testemp);
 
-class FunctionReadBinTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+void WriteTxtFile(string TextFileName, employee testemp);
 
-class FunctionReadTxtTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+class EmployeeControlTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+
+class FunctionBinContolTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+
+class FunctionTxtControlTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};
+
+class CreatorControlTest : public ::testing::TestWithParam<std::tuple<int, const char*, double>> {};

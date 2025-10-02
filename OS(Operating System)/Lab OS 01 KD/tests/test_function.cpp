@@ -1,5 +1,4 @@
 #include "test_header.h"
-#include <filesystem>
 
 void WriteBinFile(string BinFileName, employee testemp) {
 	ofstream out(BinFileName, ios::binary);
@@ -19,7 +18,7 @@ void WriteTxtFile(string TextFileName, employee testemp) {
 
 INSTANTIATE_TEST_SUITE_P(
     VariousBinInputs,
-    FunctionReadBinTest,
+    FunctionBinContolTest,
     ::testing::Values(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
@@ -29,7 +28,7 @@ INSTANTIATE_TEST_SUITE_P(
     )
 );
 
-TEST_P(FunctionReadBinTest, ReadBinFileTest) {
+TEST_P(FunctionBinContolTest, ReadBinFileTest_CorrectFile) {
     int expected_num = get<0>(GetParam());
     const char* expected_name = get<1>(GetParam());
     double expected_hours = get<2>(GetParam());
@@ -79,7 +78,7 @@ TEST(FunctionBinTest, ReadBinFileTest_EmptyFile) {
 
 INSTANTIATE_TEST_SUITE_P(
     VariousTxtInputs,
-    FunctionReadTxtTest,
+    FunctionTxtControlTest,
     ::testing::Values(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
@@ -89,7 +88,7 @@ INSTANTIATE_TEST_SUITE_P(
     )
 );
 
-TEST_P(FunctionReadTxtTest, ReadTextFileTest) {
+TEST_P(FunctionTxtControlTest, ReadTextFileTest_CorrectFile) {
     int expected_num = get<0>(GetParam());
     const char* expected_name = get<1>(GetParam());
     double expected_hours = get<2>(GetParam());

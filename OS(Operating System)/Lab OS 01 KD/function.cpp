@@ -22,6 +22,30 @@ bool startProcess(string address) {
 	return 2;
 }
 
+bool startProcessCMD(string commandLine) {
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+	ZeroMemory(&si, sizeof(STARTUPINFO));
+	si.cb = sizeof(STARTUPINFO);
+	char cmd[1024];
+	strcpy(cmd, commandLine.c_str());
+
+	if (!CreateProcess(NULL, cmd, NULL, NULL, FALSE,
+		0, NULL, NULL, &si, &pi))
+	{
+		_cputs("The new process is not created.\n");
+		_cputs("Check a name of the process.\n");
+		_cputs("Press any key to finish.\n");
+		_getch();
+		return 1;
+	}
+	_cputs("The new process is created.\n");
+	WaitForSingleObject(pi.hProcess, INFINITE);
+	CloseHandle(pi.hThread);
+	CloseHandle(pi.hProcess);
+	return 2;
+}
+
 bool ReadBinFile(string NAME) {
 	ifstream in(NAME, ios::binary);
 	if (!in.is_open()) {
@@ -34,6 +58,7 @@ bool ReadBinFile(string NAME) {
 		cout << tipok;
 	}
 	in.close();
+	return 0;
 }
 
 bool ReadTxtFile(string NAME) {
@@ -48,4 +73,5 @@ bool ReadTxtFile(string NAME) {
 		cout << line << endl;
 	}
 	in.close();
+	return 0;
 }

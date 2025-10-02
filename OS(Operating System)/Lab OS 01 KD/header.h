@@ -24,6 +24,8 @@ istream& operator >>(istream& in, employee& a);
 
 bool startProcess(string address);
 
+bool startProcessCMD(string commandLine);
+
 bool ReadBinFile(string NAME);
 
 bool ReadTxtFile(string NAME);

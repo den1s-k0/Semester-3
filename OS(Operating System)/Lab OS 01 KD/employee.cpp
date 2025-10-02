@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
+#include <limits>
 
 employee::employee() : num(0), hours(0.0) {
 	strcpy(name, "");
@@ -16,21 +18,25 @@ ostream& operator <<(ostream& out, employee& a) {
 	return out << "ID: " << a.num << "\t Name: " << a.name << "\t Number of hours: " << a.hours << endl;
 }
 
-istream& operator >>(istream& in, employee& a) {
-	cout << "\nEnter ID: ";
-	in >> a.num;
+istream& operator>>(istream& in, employee& a) {
+    cout << "\nEnter ID: ";
+    in >> a.num;
+    //in.ignore(std::numeric_limits<std::streamsize>max(), '\n');
 
-	cout << "\nEnter employee name: ";
-	string s;
-	in >> s;
-	strncpy(a.name, s.c_str(), sizeof(a.name) - 1);
-	if (s.size() > 9) {
-		a.name[sizeof(a.name) - 2] = '*';
-	}
-	a.name[sizeof(a.name) - 1] = '\0';
+    cout << "\nEnter employee name: ";
+    string s;
+    in >> s;
+    //getline(in, s);
 
-	cout << "\nEnter number of hours: ";
-	in >> a.hours;
+    strncpy(a.name, s.c_str(), sizeof(a.name) - 1);
+    a.name[sizeof(a.name) - 1] = '\0';
 
-	return in;
+    if (s.size() >= sizeof(a.name)) {
+        a.name[sizeof(a.name) - 2] = '*';
+    }
+
+    cout << "\nEnter number of hours: ";
+    in >> a.hours;
+
+    return in;
 }

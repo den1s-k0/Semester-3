@@ -17,4 +17,4 @@ add_lab_test(TestMain test_main.cpp "test_header.h;../function.cpp;../employee.c
 add_lab_test(TestEmployee test_employee.cpp "test_header.h;../employee.cpp;../header.h")
 add_lab_test(TestFunction test_function.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")
 add_lab_test(TestCreator test_creator.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")
-add_lab_test(TestReporter test_reporter.cpp "test_header.h;../employee.cpp;../header.h")
+add_lab_test(TestReporter test_reporter.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")

@@ -1,21 +1,5 @@
 #include "test_header.h"
 
-void WriteBinFile(string BinFileName, employee testemp) {
-	ofstream out(BinFileName, ios::binary);
-	if (out.is_open()) {
-		out.write(reinterpret_cast<char*>(&testemp), sizeof(employee));
-	}
-	out.close();
-}
-
-void WriteTxtFile(string TextFileName, employee testemp) {
-	ofstream out(TextFileName);
-	if (out.is_open()) {
-		out << testemp;
-	}
-	out.close();
-}
-
 INSTANTIATE_TEST_SUITE_P(
     VariousBinInputs,
     FunctionBinContolTest,
@@ -23,7 +7,7 @@ INSTANTIATE_TEST_SUITE_P(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
         make_tuple(3, "Max", 99.9),
-        make_tuple(4, "", 5.0),
+        make_tuple(4, "-", 5.0),
         make_tuple(5, "LongName", 12.3)
     )
 );
@@ -83,7 +67,7 @@ INSTANTIATE_TEST_SUITE_P(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
         make_tuple(3, "Max", 99.9),
-        make_tuple(4, "", 5.0),
+        make_tuple(4, "-", 5.0),
         make_tuple(5, "LongName", 12.3)
     )
 );

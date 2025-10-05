@@ -7,14 +7,14 @@ INSTANTIATE_TEST_SUITE_P(
 		make_tuple(1, "Denis", 10.5),
 		make_tuple(2, "Anna", 0.0),
 		make_tuple(3, "Max", 99.9),
-		make_tuple(4, "", 5.0),
+		make_tuple(4, "-", 5.0),
 		make_tuple(5, "LongName", 12.3)
 	)
 );
 
 TEST_P(CreatorControlTest, CreatorTest_Correct) {
 	const string BinTestFileName = "testCreator.bin";
-	const string InputTestFileName = "testInput.txt";
+	const string InputTestFileName = "testCreatorInput.txt";
 	int expected_num = get<0>(GetParam());
 	const char* expected_name = get<1>(GetParam());
 	double expected_hours = get<2>(GetParam());
@@ -33,8 +33,8 @@ TEST_P(CreatorControlTest, CreatorTest_Correct) {
 	in.read(reinterpret_cast<char*>(&e), sizeof(employee));
 
 	EXPECT_EQ(e.num, expected_num);
-	EXPECT_EQ(e.hours, expected_hours);
 	EXPECT_STREQ(e.name, expected_name);
+	EXPECT_EQ(e.hours, expected_hours);
 
 	in.close();
 	filesystem::remove(BinTestFileName);

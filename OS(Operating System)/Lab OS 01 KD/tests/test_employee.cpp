@@ -8,7 +8,7 @@ INSTANTIATE_TEST_SUITE_P(
         make_tuple(1, "Denis", 10.5),
         make_tuple(2, "Anna", 0.0),
         make_tuple(3, "Max", 99.9),
-        make_tuple(4, "", 5.0),
+        make_tuple(4, "-", 5.0),
         make_tuple(5, "LongName", 12.3)
     )
 );

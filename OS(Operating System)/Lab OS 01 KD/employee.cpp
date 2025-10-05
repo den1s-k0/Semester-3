@@ -6,10 +6,15 @@ employee::employee() : num(0), hours(0.0) {
 	strcpy(name, "");
 }
 employee::employee(int n, const char* nm, double h) : num(n), hours(h) {
-	strncpy(name, nm, sizeof(name) - 1);
-	if (strlen(nm) > 9) {
-		name[sizeof(name) - 2] = '*';
-	}
+    /*if(nm == nullptr) {
+        name[0] = '-';
+    }
+    else {*/
+        strncpy(name, nm, sizeof(name) - 1);
+        if (strlen(nm) > 9) {
+            name[sizeof(name) - 2] = '*';
+        }
+    //}
 	name[sizeof(name) - 1] = '\0';
 }
 

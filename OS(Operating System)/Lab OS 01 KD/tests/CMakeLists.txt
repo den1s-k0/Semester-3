@@ -18,3 +18,9 @@ add_lab_test(TestEmployee test_employee.cpp "test_header.h;../employee.cpp;../he
 add_lab_test(TestFunction test_function.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")
 add_lab_test(TestCreator test_creator.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")
 add_lab_test(TestReporter test_reporter.cpp "test_header.h;../function.cpp;../employee.cpp;../header.h")
+
+add_custom_target(run_all_tests ALL
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    DEPENDS TestMain TestEmployee TestFunction TestCreator TestReporter
+    COMMENT "Running all tests..."
+)

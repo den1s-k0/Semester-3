@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -18,10 +18,12 @@ int main()
 
 	if (n == 1) {
 		cout << mosquito[0] << endl << 1;
+		delete[] mosquito;
 		return 0;
 	}
 	if (n == 2) {
 		cout << -1;
+		delete[] mosquito;
 		return 0;
 	}
 
@@ -46,11 +48,17 @@ int main()
 	}
 	if (i != 0) {
 		cout << -1;
+		delete[] mosquito;
+		delete[] profit;
+		delete[] path;
 		return 0;
 	}
 	cout << profit[n - 1] << endl;
 	for (int j = 0; j < n; j++) {
 		if (path[j] == 1) cout << ++j << " ";
 	}
+	delete[] mosquito;
+	delete[] profit;
+	delete[] path;
 	return 0;
 }

@@ -31,4 +31,5 @@ int main()
 	else cout << N0[hight - 1];
 	delete[] N0;
 	delete[] N1;
+	return 0;
 }

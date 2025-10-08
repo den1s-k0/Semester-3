@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -29,4 +29,6 @@ int main()
 	}
 	if (k % 2 == 1) cout << N1[hight - 1];
 	else cout << N0[hight - 1];
+	delete[] N0;
+	delete[] N1;
 }

@@ -13,4 +13,6 @@ int main()
 		}
 	}
 	cout << N[k];
+    delete[] N;
+    return 0;
 }

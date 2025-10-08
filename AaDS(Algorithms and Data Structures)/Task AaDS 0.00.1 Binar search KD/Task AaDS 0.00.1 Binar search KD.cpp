@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -57,4 +57,6 @@ int main()
 			cout << t << ' ' << p1 << ' ' << p2 << endl;
 		}
 	}
+ delete[] Data;
+ delete[] Wanted;
 }

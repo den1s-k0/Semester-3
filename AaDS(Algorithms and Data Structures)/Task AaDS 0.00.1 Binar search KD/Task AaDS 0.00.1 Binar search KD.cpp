@@ -57,6 +57,7 @@ int main()
 			cout << t << ' ' << p1 << ' ' << p2 << endl;
 		}
 	}
- delete[] Data;
- delete[] Wanted;
+	delete[] Data;
+	delete[] Wanted;
+	return 0;
 }

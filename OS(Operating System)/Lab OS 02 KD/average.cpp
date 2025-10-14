@@ -1,12 +1,16 @@
 #include "average.h"
 
-int calculateAverage(int* mas, int size) {
-	int sum = 0, time = 12;
-	if (size == 0 || mas == NULL) 
-		return 0;
-	for (int i = 0; i < size; i++) {
-		sum += mas[i];
+int calculateAverage(int* mas, int size, int& result) {
+	if (mas == NULL)
+		return ReturnAverageCodes::ERROR_NULL_PONTER;
+	if (size < 1)
+		return ReturnAverageCodes::ERROR_INVALID_LENGTH;
+	int time = 12;
+	result = mas[0];
+	for (int i = 1; i < size; i++) {
+		result += mas[i];
 		Sleep(time);
 	}
-	return sum / size;
+	result /= size;
+	return ReturnAverageCodes::SUCCESS;
 }

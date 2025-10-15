@@ -15,7 +15,7 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG OFF)
 find_package(Threads REQUIRED)
 
-add_executable(Main main.cpp 
+add_executable(Main main.cpp main.h
                 core.h core.cpp 
                 min_max.h min_max.cpp 
                 average.h average.cpp 
@@ -42,7 +42,10 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(TestCore test_core.cpp test_core.h 
-                core.h core.cpp)
+                core.h core.cpp
+                min_max.h min_max.cpp
+                average.h average.cpp
+                param_structure.h param_structure.cpp)
 add_executable(TestMinMax test_min_max.cpp test_min_max.h 
                 min_max.h min_max.cpp)
 add_executable(TestAverage test_average.cpp test_average.h 

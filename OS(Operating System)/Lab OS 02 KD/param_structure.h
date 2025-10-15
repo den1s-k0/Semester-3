@@ -23,7 +23,10 @@ struct ParamStructure
 	int average;
 
 	ParamStructure();
+	ParamStructure(int s);
+	ParamStructure(int s, int mi, int ma, int av);
 	~ParamStructure();
 
 	int createMas();
+	int ArrayChange();
 };

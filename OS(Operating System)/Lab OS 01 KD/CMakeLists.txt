@@ -21,9 +21,9 @@ function(add_exe target_name source_file extra_sources)
 	endif()
 endfunction()
 
-add_exe(Main main.cpp "header.h;employee.cpp;function.cpp")
-add_exe(Creator creator.cpp "header.h;employee.cpp")
-add_exe(Reporter reporter.cpp "header.h;employee.cpp")
+add_exe(Main main.cpp "header.h;employee.cpp;employee.h;function.cpp;function.h")
+add_exe(Creator creator.cpp "header.h;creator.h;employee.cpp;employee.h")
+add_exe(Reporter reporter.cpp "header.h;reporter.h;employee.cpp;employee.h")
 
 # Поддиректория с тестами
 

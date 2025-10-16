@@ -1,5 +1,4 @@
-#include "header.h"
-#include <iomanip>
+#include "reporter.h"
 
 int main(int argc, char* argv[]) {
 	ifstream in(argv[1], ios::binary);

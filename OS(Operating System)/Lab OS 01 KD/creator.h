@@ -1,10 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include <iostream>
-#include <windows.h>
+#include <fstream>
 #include <string>
 
-#include "function.h"
-
+#include "employee.h"
 
 using namespace std;

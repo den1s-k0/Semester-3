@@ -1,5 +1,4 @@
-#include "header.h"
-#include <conio.h>
+#include "function.h"
 
 bool startProcess(string address) {
 	STARTUPINFO si;

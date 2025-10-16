@@ -1,20 +1,18 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "header.h"
-#include <limits>
+#include "employee.h"
 
 employee::employee() : num(0), hours(0.0) {
 	strcpy(name, "");
 }
 employee::employee(int n, const char* nm, double h) : num(n), hours(h) {
-    /*if(nm == nullptr) {
+    if(nm == nullptr) {
         name[0] = '-';
     }
-    else {*/
+    else {
         strncpy(name, nm, sizeof(name) - 1);
         if (strlen(nm) > 9) {
             name[sizeof(name) - 2] = '*';
         }
-    //}
+    }
 	name[sizeof(name) - 1] = '\0';
 }
 

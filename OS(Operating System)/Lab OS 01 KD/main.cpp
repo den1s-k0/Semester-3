@@ -1,29 +1,29 @@
-﻿#include "header.h"
+#include "main.h"
 
 int main()
 {
 
-	string BinName, BinAddress, ReportName, ReportAddress;
+	string BinName, BinInputs, BinPath, ReportName, ReportInputs, ReportPath;
 	int employeeNumber, hourly_rate;
 	cout << "\nEnter bin-file name: ";
 	cin >> BinName;
-	BinName += ".bin";
+	BinPath = "C:\\PathToBinFile\\" + BinName + ".bin";
 	cout << "\nEnter number of employees: ";
 	cin >> employeeNumber;
 
-	BinAddress = "Creator.exe " + BinName + " " + to_string(employeeNumber);
-	startProcess(BinAddress);
-	ReadBinFile(BinName);
+	BinInputs = "Creator.exe \"" + BinPath + "\" " + to_string(employeeNumber);
+	startProcess(BinInputs);
+	ReadBinFile(BinPath);
 
 	cout << "\nEnter report-file name: ";
 	cin >> ReportName;
-	ReportName += ".txt";
+	ReportPath = "C:\\PathToTxtFile\\\\" + ReportName + ".txt";
 	cout << "\nEnter hourly rate: ";
 	cin >> hourly_rate;
 
-	ReportAddress = "Reporter.exe " + BinName + " " + ReportName + " " + to_string(hourly_rate);
-	startProcess(ReportAddress);
-	ReadTxtFile(ReportName);
+	ReportInputs = "Reporter.exe \"" + BinPath + "\" \"" + ReportPath + "\" " + to_string(hourly_rate);
+	startProcess(ReportInputs);
+	ReadTxtFile(ReportPath);
 
 	return 0;
 }

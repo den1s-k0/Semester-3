@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 		<< setw(10) << "Hours" << " | "
 		<< setw(10) << "Salary" << endl
 		<< string(57, '-') << endl;
-	while (in.read(reinterpret_cast<char*>(&tipok), sizeof(employee))) {
+	while (tipok.deserialize(in)) {
 		salary = hourly_rate * tipok.hours;
 		out << setw(5) << to_string(i) + "." << " | "
 			<< setw(10) << tipok.num << " | "

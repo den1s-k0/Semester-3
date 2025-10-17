@@ -1,4 +1,12 @@
-#include "test_header.h"
+#include "test_function.h"
+
+void WriteTxtFile(string TextFileName, employee testemp) {
+    ofstream out(TextFileName);
+    if (out.is_open()) {
+        out << testemp;
+    }
+    out.close();
+}
 
 INSTANTIATE_TEST_SUITE_P(
     VariousBinInputs,

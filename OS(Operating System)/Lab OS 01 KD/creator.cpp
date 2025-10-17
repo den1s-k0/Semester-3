@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 	employee tipok;
 	for (int i = 0; i < stoi(argv[2]); i++) {
 		cin >> tipok;
-		out.write(reinterpret_cast<char*>(&tipok), sizeof(employee));
+		tipok.serialize(out);
 	}
 	out.close();
 	return 0;

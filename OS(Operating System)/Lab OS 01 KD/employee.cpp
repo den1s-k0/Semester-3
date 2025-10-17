@@ -16,6 +16,20 @@ employee::employee(int n, const char* nm, double h) : num(n), hours(h) {
 	name[sizeof(name) - 1] = '\0';
 }
 
+void employee::serialize(ostream& out) const {
+    out.write(reinterpret_cast<const char*>(&num), sizeof(num));
+    out.write(name, sizeof(name));
+    out.write(reinterpret_cast<const char*>(&hours), sizeof(hours));
+}
+
+bool employee::deserialize(istream& in) {
+    in.read(reinterpret_cast<char*>(&num), sizeof(num));
+    in.read(name, sizeof(name));
+    in.read(reinterpret_cast<char*>(&hours), sizeof(hours));
+
+    return !in.fail();
+}
+
 ostream& operator <<(ostream& out, employee& a) {
 	out << fixed << setprecision(2);
 	return out << "ID: " << a.num << "\t Name: " << a.name << "\t Number of hours: " << a.hours << endl;
@@ -24,12 +38,10 @@ ostream& operator <<(ostream& out, employee& a) {
 istream& operator>>(istream& in, employee& a) {
     cout << "\nEnter ID: ";
     in >> a.num;
-    //in.ignore(std::numeric_limits<std::streamsize>max(), '\n');
 
     cout << "\nEnter employee name: ";
     string s;
     in >> s;
-    //getline(in, s);
 
     strncpy(a.name, s.c_str(), sizeof(a.name) - 1);
     a.name[sizeof(a.name) - 1] = '\0';

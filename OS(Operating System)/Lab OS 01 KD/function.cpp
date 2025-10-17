@@ -53,7 +53,7 @@ bool ReadBinFile(string NAME) {
 	}
 	employee tipok;
 	cout << endl;
-	while (in.read(reinterpret_cast<char*>(&tipok), sizeof(employee))) {
+	while (tipok.deserialize(in)) {
 		cout << tipok;
 	}
 	in.close();

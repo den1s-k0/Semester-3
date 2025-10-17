@@ -13,10 +13,10 @@ function(add_lab_test target_name source_file extra_sources)
     gtest_discover_tests(${target_name})
 endfunction()
 
-add_lab_test(TestEmployee test_employee.cpp "test_header.h;../employee.cpp;../employee.h;../header.h")
-add_lab_test(TestFunction test_function.cpp "test_header.h;../function.cpp;../function.h;../employee.cpp;../employee.h;../header.h")
-add_lab_test(TestCreator test_creator.cpp "test_header.h;../function.cpp;../function.h;../employee.cpp;../employee.h;../header.h")
-add_lab_test(TestReporter test_reporter.cpp "test_header.h;../function.cpp;../function.h;../employee.cpp;../employee.h;../header.h")
+add_lab_test(TestEmployee test_employee.cpp "test_employee.h;../employee.cpp;../employee.h")
+add_lab_test(TestFunction test_function.cpp "test_function.h;test_core.cpp;test_core.h;../function.cpp;../function.h;../employee.cpp;../employee.h")
+add_lab_test(TestCreator test_creator.cpp "test_creator.h;../function.cpp;../function.h;../employee.cpp;../employee.h")
+add_lab_test(TestReporter test_reporter.cpp "test_reporter.h;test_core.cpp;test_core.h;../function.cpp;../function.h;../employee.cpp;../employee.h")
 
  add_custom_target(run_all_tests ALL
  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure

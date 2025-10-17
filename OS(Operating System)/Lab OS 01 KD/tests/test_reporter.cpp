@@ -1,4 +1,4 @@
-#include "test_header.h"
+#include "test_reporter.h"
 
 INSTANTIATE_TEST_SUITE_P(
 	VariousReporterInputs,

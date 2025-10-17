@@ -1,4 +1,4 @@
-#include "test_header.h"
+#include "test_creator.h"
 
 INSTANTIATE_TEST_SUITE_P(
 	VariousCreatorInputs,
@@ -30,7 +30,7 @@ TEST_P(CreatorControlTest, CreatorTest_Correct) {
 	ASSERT_TRUE(in.is_open());
 
 	employee e;
-	in.read(reinterpret_cast<char*>(&e), sizeof(employee));
+	e.deserialize(in);
 
 	EXPECT_EQ(e.num, expected_num);
 	EXPECT_STREQ(e.name, expected_name);

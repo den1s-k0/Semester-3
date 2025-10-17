@@ -16,6 +16,10 @@ struct employee {
 	employee();
 	employee(int n, const char* nm, double h);
 	~employee() {};
+
+	void serialize(ostream& out) const;
+	bool deserialize(istream& in);
+
 };
 ostream& operator <<(ostream& out, employee& a);
 istream& operator >>(istream& in, employee& a);

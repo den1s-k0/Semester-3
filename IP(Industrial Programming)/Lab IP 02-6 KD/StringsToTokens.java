@@ -2,6 +2,7 @@ import java.io.*;
 import java.lang.String;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -85,29 +86,21 @@ public class StringsToTokens {
         return tokens_split;
     }
 
-    public static int[] DecimalNumbers(String[] strs){
-        int count_numbers = 0;
-        for (int i = 0; i < strs.length; i++){
-            try {
-                Integer.parseInt(strs[i]);
-                count_numbers++;
-            } catch (NumberFormatException e) {
-                continue;
-            }
-        }
-        int[] numbers = new int[count_numbers];
-        int j = 0;
+    public static String DecimalNumbers(String[] strs){
+        StringBuilder numbers = new StringBuilder();
+        int number;
         System.out.println("\nNumbers output: ");
         for(int i = 0; i < strs.length; i++) {
             try {
-                numbers[j] = Integer.parseInt(strs[i]);
-                System.out.println(numbers[j]);
-                j++;
+                number = Integer.parseInt(strs[i]);
+                System.out.println(number);
+                numbers.append(number);
+                numbers.append(' ');
             } catch (NumberFormatException e) {
                 continue;
             }
         }
-        return numbers;
+        return numbers.toString();
     }
 
     public static void FindDates(String str){
@@ -119,8 +112,12 @@ public class StringsToTokens {
         }
     }
 
-    public static void isValidTime(String[] strs) {
-        System.out.println("\nDates found: ");
+    public static String[] ValidTime(String[] strs) {
+        StringBuilder dates_not_sorted = new StringBuilder();
+        StringBuilder dates_sorted = new StringBuilder();
+        StringBuilder dates_buffer= new StringBuilder();
+        int date_count = 0;
+
         for(int i = 0; i < strs.length; i++){
             if (strs[i] == null || !strs[i].matches("\\d{2}\\\\\\d{2}\\\\\\d{2}")) {
                 continue;
@@ -130,23 +127,117 @@ public class StringsToTokens {
             sdf.setLenient(false);
             try {
                 Date time = sdf.parse(normalizedTime);
-                System.out.println(strs[i]);
+                dates_not_sorted.append(strs[i]);
+                dates_not_sorted.append(' ');
+                date_count++;
             } catch (ParseException e) {
                 continue;
             }
         }
+        Date[] date_arr = new Date[date_count];
+        date_count = 0;
+        for(int i = 0; i < strs.length; i++){
+            if (strs[i] == null || !strs[i].matches("\\d{2}\\\\\\d{2}\\\\\\d{2}")) {
+                continue;
+            }
+            String normalizedTime = strs[i].replace("\\", ":");
+            SimpleDateFormat sdf = new SimpleDateFormat("mm:HH:ss");
+            sdf.setLenient(false);
+            try {
+                date_arr[date_count] = sdf.parse(normalizedTime);
+                date_count++;
+            } catch (ParseException e) {
+                continue;
+            }
+        }
+        Arrays.sort(date_arr);
+        for(int i = 0; i < date_count; i++){
+            dates_buffer.append(date_arr[i]);
+            dates_buffer.delete(0, 11);
+            dates_buffer.reverse();
+            dates_buffer.delete(0, 9);
+            dates_buffer.insert(0, ' ');
+            dates_buffer.reverse();
+            dates_sorted.append(dates_buffer);
+        }
+        String[] result = new String[2];
+        result[0] = dates_not_sorted.toString();
+        result[1] = dates_sorted.toString();
+        result[1] = result[1].replace(":", "\\");
+        System.out.println("\nDates found: ");
+        System.out.println(result[0]);
+        System.out.println("\nSort dates: ");
+        System.out.println(result[1]);
+        return result;
+    }
+
+    public static int FindMinToken(String[] strs){
+        int min_length = strs[0].length(), min_index = -1;
+        for(int i = 0; i < strs.length; i++) {
+            if (strs[i] == null || !strs[i].matches("\\d\\.*")) {
+                continue;
+            }
+            if(strs[i].length() < min_length){
+                min_length = strs[i].length();
+                min_index = i;
+            }
+        }
+        return min_index;
+    }
+
+    public static int FindDecToken(String[] strs) {
+        int dec_ind = strs.length / 2;
+        for(int i = 0; i < strs.length; i++) {
+            try {
+                Integer.parseInt(strs[i]);
+                dec_ind = i;
+                break;
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        return dec_ind;
+    }
+
+    public static String CreateResult(String[] strs, int min_ind, int dec_ind){
+        StringBuffer result = new StringBuffer();
+        for(int i = 0; i < strs.length; i++){
+            if(i - 1 == dec_ind)
+                result.append(((int)(Math.random() * 100)) + " ");
+            if(i == min_ind)
+                continue;
+            result.append(strs[i] + ' ');
+        }
+        System.out.println("\nResult: ");
+        System.out.println(result);
+        return result.toString();
     }
 
     public static void main(String[] args){
-        String[] inp = ReadTxtFile("D:\\BSU\\Third Semester\\IP(Industrial Programming)\\Lab IP 02-6 KD\\src\\Files\\input.txt");
-        int count_numbers = 0;
+        String input_path = "D:\\BSU\\Third Semester\\IP(Industrial Programming)\\Lab IP 02-6 KD\\src\\Files\\input.txt";
+        String output_path = "D:\\BSU\\Third Semester\\IP(Industrial Programming)\\Lab IP 02-6 KD\\src\\Files\\output.txt";
+        String[] inp = ReadTxtFile(input_path);
 
         String[] tokens_tokenizer = Tokenizer(inp[0], inp[1]);
 
         String[] tokens_split = OneSeparatorSplit(inp[0], inp[1]);
 
-        int[] dec_numbers = DecimalNumbers(tokens_tokenizer);
+        String dec_numbers = DecimalNumbers(tokens_tokenizer);
+        WriteTxtFile(output_path, "\nDecimal Numbers: ");
+        WriteTxtFile(output_path, dec_numbers);
 
-        isValidTime(tokens_split);
+        String[] time = ValidTime(tokens_split);
+        WriteTxtFile(output_path, "\nTime: ");
+        WriteTxtFile(output_path, time[0]);
+        WriteTxtFile(output_path, "\nSort Time: ");
+        WriteTxtFile(output_path, time[1]);
+
+        int min_token = FindMinToken(tokens_tokenizer);
+
+        int dec_token = FindDecToken(tokens_split);
+
+        String result = CreateResult(tokens_tokenizer, min_token, dec_token);
+        WriteTxtFile(output_path, "\nResult: ");
+        WriteTxtFile(output_path, result);
     }
 }

@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <string_view>
@@ -57,23 +57,19 @@ int main() {
 
     int n = input_str.length();
     int** dp = new int* [n];
-    string** way = new string * [n];
+    string** way = new string* [n];
 
     for (int i = 0; i < n; i++) {
         dp[i] = new int[n + 1]();
         way[i] = new string[n + 1];
-
-        for (int j = 0; j <= n; j++) {
-            if (j > i) {
-                dp[i][j] = j - i;
-                way[i][j] = input_str.substr(i, j - i);
-            }
-        }
     }
 
     for (int len = 1; len <= n; len++) {
         for (int i = 0; i + len <= n; i++) {
             int j = i + len;
+
+            dp[i][j] = j - i;
+            way[i][j] = input_str.substr(i, j - i);
 
             int k = find_min_k_ind(dp, i, j);
             if (k != -1 && dp[i][k] + dp[k][j] < dp[i][j]) {
@@ -82,11 +78,9 @@ int main() {
             }
 
             int p = find_best_p(dp, input_str, i, j);
-            if (p != -1) {
-                if (to_string(len / p).length() + 2 + dp[i][i + p] < dp[i][j]) {
-                    way[i][j] = to_string(len / p) + "(" + way[i][i + p] + ")";
-                    dp[i][j] = way[i][j].length();
-                }
+            if (p != -1 && to_string(len / p).length() + 2 + dp[i][i + p] < dp[i][j]) {
+                way[i][j] = to_string(len / p) + "(" + way[i][i + p] + ")";
+                dp[i][j] = way[i][j].length();
             }
         }
     }

@@ -1,0 +1,232 @@
+
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 66 different 564779321 of separators and 54\23\09 \50\20 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 98 different 564779321 of separators and 54\23\09 \50\20 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 71 different 564779321 of separators and 54\23\09 \50\20 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 75 different 564779321 of separators and 54\23\09 \50\20 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 36 different 564779321 of separators and 54\23\09 \61\25\61 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 
+
+Sort Time: 
+23\54\09 
+
+Result: 
+primer strochechki with 63 different 564779321 of separators and 54\23\09 61\25\61 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 u Jan 01 23\54\09 \54\09 Thu Jan 01 23\59\59 
+
+Result: 
+primer strochechki with 51 different 564779321 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+4 564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 21 different 564779321 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000den different 564779321 52 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+4000 564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000 8 den different 564779321 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+4000 564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000 3 den different 564779321 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+4000 564779321 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 89 den different 564779321 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 5647den 88 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+5647 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 76 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+5647 
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 3 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 5647den 12 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 5647den 54 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 5647den 89 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 5647den 77 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 61 of separators and 54\23\09 59\23\59 30\22\30 
+Decimal Numbers: 
+
+
+Time: 
+54\23\09 59\23\59 30\22\30 
+
+Sort Time: 
+22\30\30 23\54\09 23\59\59 
+
+Result: 
+primer strochechki with 4000000000000000 den different 73 of separators and 54\23\09 59\23\59 30\22\30 

@@ -24,3 +24,31 @@ endfunction()
 add_exe(Main main.cpp "main.h;fib.cpp;fib.h")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(TestFib test_fib.cpp test_fib.h fib.h fib.cpp)
+
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+    set_property(TARGET TestFib PROPERTY CXX_STANDARD 20)
+endif()
+
+target_link_libraries(TestFib PRIVATE gtest gtest_main)
+
+
+include(GoogleTest)
+gtest_discover_tests(TestFib)
+
+add_custom_target(run_all_tests ALL
+COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+ DEPENDS TestFib
+  COMMENT "Running all tests..."
+)

@@ -5,15 +5,21 @@
 using namespace std;
 
 struct fib {
-	int size;
-	long long* fib_arr = new long long[size];
 
+private:
+	int size;
+	long long* fib_arr;
+
+	void CalculateFib();
+
+public:
 	fib();
 	fib(int s);
 
 	~fib();
 
-	void CalculateFib();
+	int GetSize();
 	void GetFibArr();
-	fib StartFib();
+
+	const long long& operator[](int ind) const;
 };

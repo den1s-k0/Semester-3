@@ -34,11 +34,11 @@ class StringsToTokensTest {
         String test_input = "String*+-+with+-*+-lots*+-*+-of-+*separators";
         String test_sep = "+-*";
         String[] test_output = Tokenizer(test_input, test_sep);
-        assertEquals(test_output[0], "String");
-        assertEquals(test_output[1], "with");
-        assertEquals(test_output[2], "lots");
-        assertEquals(test_output[3], "of");
-        assertEquals(test_output[4], "separators");
+        assertEquals("String", test_output[0]);
+        assertEquals("with", test_output[1]);
+        assertEquals("lots", test_output[2]);
+        assertEquals("of", test_output[3]);
+        assertEquals("separators", test_output[4]);
     }
 
     @Test
@@ -46,7 +46,7 @@ class StringsToTokensTest {
         String test_input = "String*+-+with+-*+-lots*+-*+-of-+*separators";
         String test_sep = "";
         String[] test_output = Tokenizer(test_input, test_sep);
-        assertEquals(test_output[0], "String*+-+with+-*+-lots*+-*+-of-+*separators");
+        assertEquals("String*+-+with+-*+-lots*+-*+-of-+*separators", test_output[0]);
     }
 
     @Test
@@ -54,7 +54,7 @@ class StringsToTokensTest {
         String test_input = "";
         String test_sep = "$|";
         String[] test_output = Tokenizer(test_input, test_sep);
-        assertEquals(test_output, null);
+        assertNull(test_output);
     }
 
     @Test
@@ -73,11 +73,11 @@ class StringsToTokensTest {
         String test_input = "String*+-+with+-*+-lots*+-*+-of-+*separators";
         String test_sep = "-+*";
         String[] test_output = OneSeparatorSplit(test_input, test_sep);
-        assertEquals(test_output[0], "String");
-        assertEquals(test_output[1], "with");
-        assertEquals(test_output[2], "lots");
-        assertEquals(test_output[3], "of");
-        assertEquals(test_output[4], "separators");
+        assertEquals("String", test_output[0]);
+        assertEquals("with", test_output[1]);
+        assertEquals("lots", test_output[2]);
+        assertEquals("of", test_output[3]);
+        assertEquals("separators", test_output[4]);
     }
 
     @Test
@@ -85,7 +85,7 @@ class StringsToTokensTest {
         String test_input = "String*+-+with+-*+-lots*+-*+-of-+*separators";
         String test_sep = "";
         String[] test_output = OneSeparatorSplit(test_input, test_sep);
-        assertEquals(test_output[0], "String*+-+with+-*+-lots*+-*+-of-+*separators");
+        assertEquals("String*+-+with+-*+-lots*+-*+-of-+*separators", test_output[0]);
     }
 
     @Test
@@ -93,7 +93,7 @@ class StringsToTokensTest {
         String test_input = "";
         String test_sep = "$|";
         String[] test_output = OneSeparatorSplit(test_input, test_sep);
-        assertEquals(test_output, null);
+        assertNull(test_output);
     }
 
     @Test
@@ -132,24 +132,14 @@ class StringsToTokensTest {
     void decimalNumbers_with_negative() {
         String[] test_input = {"123", "-45", "678"};
         String result = DecimalNumbers(test_input);
-        assertEquals("123 -45 678 ", result); // -45 не будет распознано как целое число
-    }
-
-    @Test
-    void findDates() {
-        String test_input = "Some text 12\\34\\56 and 23\\45\\01 with dates";
-        // Метод FindDates только выводит в консоль, не возвращает значение
-        // Для тестирования нужно перехватывать вывод или изменить метод
-        FindDates(test_input);
-        // Проверяем что метод выполняется без исключений
-        assertTrue(true);
+        assertEquals("123 -45 678 ", result);
     }
 
     @Test
     void findDates_no_dates() {
         String test_input = "Some text without dates";
         FindDates(test_input);
-        assertTrue(true);
+        assertFalse(FindDates(test_input));
     }
 
     @Test
@@ -165,7 +155,6 @@ class StringsToTokensTest {
         String[] test_input = {"60\\70\\80", "invalid", "99\\99\\99"};
         String[] result = ValidTime(test_input);
         assertNotNull(result);
-        // Должны быть пустые строки, так как нет валидных времен
         assertEquals("", result[0].trim());
         assertEquals("", result[1].trim());
     }
@@ -182,14 +171,14 @@ class StringsToTokensTest {
     void findMinToken() {
         String[] test_input = {"123abc", "45xyz", "6pqr", "8901mn", "nonumber"};
         int result = FindMinToken(test_input);
-        assertEquals(2, result); // "6pqr" имеет длину 4, что меньше других
+        assertEquals(2, result);
     }
 
     @Test
     void findMinToken_no_numbers_at_start() {
         String[] test_input = {"abc123", "xyz45", "pqr"};
         int result = FindMinToken(test_input);
-        assertEquals(-1, result); // Ни одна строка не начинается с цифры
+        assertEquals(-1, result);
     }
 
     @Test
@@ -210,35 +199,35 @@ class StringsToTokensTest {
     void findDecToken() {
         String[] test_input = {"abc", "123", "def", "456"};
         int result = FindDecToken(test_input);
-        assertEquals(1, result); // Первое число на позиции 1
+        assertEquals(1, result);
     }
 
     @Test
     void findDecToken_no_decimals() {
         String[] test_input = {"abc", "def", "ghi"};
         int result = FindDecToken(test_input);
-        assertEquals(1, result); // Длина массива 3, середина = 1.5 -> округляется до 2? Проверить логику
+        assertEquals(1, result);
     }
 
     @Test
     void findDecToken_empty_array() {
         String[] test_input = {};
         int result = FindDecToken(test_input);
-        assertEquals(0, result); // Для пустого массива длина/2 = 0
+        assertEquals(0, result);
     }
 
     @Test
     void findDecToken_first_element() {
         String[] test_input = {"123", "abc", "def"};
         int result = FindDecToken(test_input);
-        assertEquals(0, result); // Первый элемент - число
+        assertEquals(0, result);
     }
 
     @Test
     void createResult() {
         String[] test_input = {"token1", "token2", "token3", "token4"};
-        int min_ind = 1; // Удалить token2
-        int dec_ind = 2; // Вставить случайное число перед token3
+        int min_ind = 1;
+        int dec_ind = 2;
         String result = CreateResult(test_input, min_ind, dec_ind);
 
         assertNotNull(result);
@@ -246,15 +235,14 @@ class StringsToTokensTest {
         assertTrue(result.contains("token3"));
         assertTrue(result.contains("token4"));
         assertFalse(result.contains("token2"));
-        // Проверяем что есть случайное число (цифры)
         assertTrue(result.matches(".*\\d+.*"));
     }
 
     @Test
     void createResult_no_min_token() {
         String[] test_input = {"token1", "token2", "token3"};
-        int min_ind = -1; // Не удалять ничего
-        int dec_ind = 1; // Вставить случайное число перед token2
+        int min_ind = -1;
+        int dec_ind = 1;
         String result = CreateResult(test_input, min_ind, dec_ind);
 
         assertNotNull(result);
@@ -272,15 +260,5 @@ class StringsToTokensTest {
         String result = CreateResult(test_input, min_ind, dec_ind);
 
         assertEquals("", result.trim());
-    }
-
-    @Test
-    void testNumberAtStartPattern() {
-        // Тестируем регулярное выражение для чисел в начале строки
-        assertTrue("123abc".matches("\\d+.*"));
-        assertTrue("45.67xyz".matches("\\d+.*"));
-        assertFalse("abc123".matches("\\d+.*"));
-        assertFalse(" abc123".matches("\\d+.*"));
-        assertTrue("8hello world".matches("\\d+.*"));
     }
 }

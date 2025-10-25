@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <gtest/gtest.h>
+#include "linked_list.h"
 
 using namespace std;
 

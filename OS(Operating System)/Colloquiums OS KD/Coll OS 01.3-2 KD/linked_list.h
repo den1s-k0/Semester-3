@@ -10,6 +10,10 @@ namespace ReturnLinkedListCodes{
 	const int WRONG_INDEX = -1;
 
 	const int HEAD_ISNT_EXIST = -2;
+
+	const int ERROR_POP_BACK = -3;
+
+	const int ERROR_PUSH_BACK = -4;
 }
 
 using namespace std;
@@ -56,13 +60,13 @@ void LinkedList<T>::swap_node(Node<T>* A, Node<T>* B) {
 	Node<T>* current = head;
 
 	while (current) {
-		if (current->next == A) prevA = current;
-		if (current->next == B) prevB = current;
-		current = current->next;
+		if (current->pnext == A) prevA = current;
+		if (current->pnext == B) prevB = current;
+		current = current->pnext;
 	}
 
-	if (A == head) B = head;
-	else if (B == head) A = head;
+	if (A == head) head = B;
+	else if (B == head) head = A;
 
 	if (A->pnext == B) {
 		prevA->pnext = B;
@@ -111,6 +115,7 @@ int LinkedList<T>::push_back(T data) {
 			size++;
 			return ReturnLinkedListCodes::SUCCESS;
 		}
+		return ReturnLinkedListCodes::ERROR_PUSH_BACK;
 	}
 	else {
 		head = new Node<T>(data);
@@ -146,6 +151,12 @@ int LinkedList<T>::push_ind(T data, const int index) {
 template<typename T>
 int LinkedList<T>::pop_back() {
 	if (head) {
+		if (size == 1) {
+			delete head;
+			head = nullptr;
+			size--;
+			return ReturnLinkedListCodes::SUCCESS;
+		}
 		Node<T>* current = head;
 		while (current->pnext->pnext)
 			current = current->pnext;
@@ -155,6 +166,7 @@ int LinkedList<T>::pop_back() {
 			size--;
 			return ReturnLinkedListCodes::SUCCESS;
 		}
+		return ReturnLinkedListCodes::ERROR_POP_BACK;
 	}
 	else 
 		return ReturnLinkedListCodes::HEAD_ISNT_EXIST;

@@ -49,14 +49,6 @@ public:
 	}
 };
 
-void parseString(const string& input, long long& key, int& parent, char& rl) {
-	size_t pos1 = input.find(' ');
-	size_t pos2 = input.find(' ', pos1 + 1);
-	key = stoll(input.substr(0, pos1));
-	parent = stoi(input.substr(pos1 + 1, pos2 - pos1 - 1));
-	rl = input[pos2 + 1];
-}
-
 int main()
 {
 	ios_base::sync_with_stdio(0);
@@ -77,10 +69,8 @@ int main()
 	in >> x;
 	Mas[0] = SearchTreePrototipe(Mas, result, x, 0, '-');
 
-	getline(in, line);
 	for (int i = 1; i < size; i++) {
-		getline(in, line);
-		parseString(line, key, parent, rl);
+		in >> key >> parent >> rl;
 		Mas[i] = SearchTreePrototipe(Mas, result, key, parent, rl);
 		if (!result) 
 			break;

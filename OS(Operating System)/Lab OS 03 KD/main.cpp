@@ -2,27 +2,16 @@
 
 int main()
 {
-	vector<int> mas = createVectorOfZeros();
-	int thread_count = cinThreadCount();
-	HANDLE* hThread = new HANDLE[thread_count];
-	DWORD* dwThread = new DWORD[thread_count];
+	int array_size = cinIntLessEqualN(MAX_SIZES_OF_ARRAYS::MAX_SIZE_OF_ARRAY, "Enter array size: ");
+	int* array;
+	createArrayOfZeros(array, array_size);
 
-	for (int i = 0; i < thread_count; i++) {
-		hThread[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)thread,
-			NULL, 0, &dwThread[i]);
-		if (hThread[i] == NULL)
-			return GetLastError();
-	}
+	int threads_count = cinIntLessEqualN(MAX_SIZES_OF_ARRAYS::MAX_COUNT_OF_THREADS, "Enter count of threads: ");
 
-	if (WaitForMultipleObjects(thread_count, hThread, TRUE, INFINITE) == WAIT_FAILED)
-	{
-		cout << "Wait for multiple objects failed." << endl;
-		cout << "Press any key to exit." << endl;
-	}
-	
-	for (int i = 0; i < thread_count; i++) {
-		CloseHandle(hThread[i]);
-	}
+	HANDLE start_event = CreateEvent(NULL, TRUE, FALSE, NULL);
+
+	ThreadData* threads_data;
+	HANDLE* threads_handles;
 
 
 	return 0;

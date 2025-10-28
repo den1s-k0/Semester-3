@@ -15,7 +15,8 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG OFF)
 find_package(Threads REQUIRED)
 
-add_executable(Main main.cpp main.h
+add_executable(Main main.h main.cpp
+                ThreadData.h, ThreadData.cpp,
                 core.h core.cpp 
                 marker.h marker.cpp)
 

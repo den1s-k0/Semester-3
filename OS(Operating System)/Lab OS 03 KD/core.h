@@ -2,6 +2,10 @@
 
 #include <iostream>
 #include <vector>
+#include <windows.h>
+#include <stdlib.h>
+#include "main.h"
+
 
 using namespace std;
 
@@ -9,6 +13,8 @@ namespace ReturnCoreCodes {
 	const int SUCCES = 0;
 }
 
-vector <int> createVectorOfZeros();
+int cinIntLessEqualN(int max, string str);
 
-int cinThreadCount();
+void createArrayOfZeros(int* array, int size);
+
+void createArrayOfThreads(ThreadData* threads_data, HANDLE* threads_handles, int threads_count, int* array, int array_size, HANDLE start_event);

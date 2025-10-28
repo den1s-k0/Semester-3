@@ -11,18 +11,11 @@ endif()
 
 project ("Coll OS 01.1-2 KD")
 
-function(add_exe target_name source_file extra_sources)
-    add_executable(${target_name}
-        ${source_file}
-        ${extra_sources}
-    )
-	if (CMAKE_VERSION VERSION_GREATER 3.12)
-		set_property(TARGET ${target_name} PROPERTY CXX_STANDARD 20)
+add_executable(Main main.cpp main.h fib.cpp fib.h bigint.cpp bigint.h)
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+		set_property(TARGET Main PROPERTY CXX_STANDARD 20)
 	endif()
-endfunction()
-
-add_exe(Main main.cpp "main.h;fib.cpp;fib.h")
-
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
 
 include(FetchContent)
@@ -34,7 +27,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(TestFib test_fib.cpp test_fib.h fib.h fib.cpp)
+add_executable(TestFib test_fib.cpp test_fib.h fib.h fib.cpp bigint.cpp bigint.h)
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

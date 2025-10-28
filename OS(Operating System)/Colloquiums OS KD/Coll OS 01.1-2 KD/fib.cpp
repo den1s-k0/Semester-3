@@ -3,7 +3,8 @@
 fib::fib()
 {
 	size = 1;
-	fib_arr = new long long[1] {1};
+	fib_arr = new BigInt[1];
+	fib_arr[0] = 0;
 }
 
 fib::fib(int s): size(s + 1)
@@ -12,11 +13,11 @@ fib::fib(int s): size(s + 1)
 		cout << "Size too small\nSize = 1\n";
 		size = 1;
 	}
-	if (size > 92) {
-		cout << "Size too big\nSize = 92 (with 0 position)\n";
-		size = 92;
+	if (size > 501) {
+		cout << "Size too big\nSize = 501 (with 0 position)\n";
+		size = 501;
 	}
-	fib_arr = new long long[size] {1};
+	fib_arr = new BigInt[size];
 	CalculateFib();
 }
 
@@ -42,6 +43,13 @@ void fib::CalculateFib()
 	}
 }
 
+int fib::Min(int size_1, int size_2)
+{
+	if(size_1 > size_2)
+		return size_2;
+	return size_1;
+}
+
 void fib::GetFibArr()
 {
 	for (int i = 0; i < size; i++) {
@@ -49,7 +57,7 @@ void fib::GetFibArr()
 	}
 }
 
-const long long& fib::operator[](int ind) const
+const BigInt& fib::operator[](int ind) const
 {
 	if (ind >= this->size) {
 		throw std::out_of_range("Index out of range");

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "bigint.h"
 
 using namespace std;
 
@@ -8,9 +9,11 @@ struct fib {
 
 private:
 	int size;
-	long long* fib_arr;
+	BigInt* fib_arr;
 
 	void CalculateFib();
+
+	int Min(int size_1, int size_2);
 
 public:
 	fib();
@@ -21,5 +24,5 @@ public:
 	int GetSize();
 	void GetFibArr();
 
-	const long long& operator[](int ind) const;
+	const BigInt& operator[](int ind) const;
 };

@@ -28,20 +28,25 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(TestFib test_fib.cpp test_fib.h fib.h fib.cpp bigint.cpp bigint.h)
+add_executable(TestBigInt test_big_int.cpp test_big_int.h bigint.cpp bigint.h)
+
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET TestFib PROPERTY CXX_STANDARD 20)
+	set_property(TARGET TestBigInt PROPERTY CXX_STANDARD 20)
 endif()
 
 target_link_libraries(TestFib PRIVATE gtest gtest_main)
+target_link_libraries(TestBigInt PRIVATE gtest gtest_main)
 
 
 include(GoogleTest)
 gtest_discover_tests(TestFib)
+gtest_discover_tests(TestBigInt)
 
 add_custom_target(run_all_tests ALL
 COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
- DEPENDS TestFib
+ DEPENDS TestFib TestBigInt
   COMMENT "Running all tests..."
 )

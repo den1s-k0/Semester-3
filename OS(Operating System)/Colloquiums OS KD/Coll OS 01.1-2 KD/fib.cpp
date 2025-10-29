@@ -13,9 +13,9 @@ fib::fib(int s): size(s + 1)
 		cout << "Size too small\nSize = 1\n";
 		size = 1;
 	}
-	if (size > 501) {
+	if (size > 686) {
 		cout << "Size too big\nSize = 501 (with 0 position)\n";
-		size = 501;
+		size = 686;
 	}
 	fib_arr = new BigInt[size];
 	CalculateFib();

@@ -9,7 +9,7 @@ public:
 
 	long long* digits = new long long[SIZE];
 	static const long long BASE = 1000000000;
-	static const long long SIZE = 13;
+	static const long long SIZE = 16;
 
 	BigInt();
 
@@ -25,15 +25,11 @@ public:
 
 	BigInt operator+(const BigInt& other);
 
-	BigInt& operator++();
-
-	void operator-=(const BigInt& other);
-
-	BigInt operator-(const BigInt& other);
-
-	BigInt& operator--();
-
 	bool operator==(const BigInt& other) const;
+
+	bool operator==(const int& other) const;
+
+	bool operator==(const long long& other) const;
 
 	friend ostream& operator<<(std::ostream& out, const BigInt& num);
 };

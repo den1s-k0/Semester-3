@@ -51,40 +51,27 @@ BigInt BigInt::operator+(const BigInt& other) {
 	return N;
 }
 
-BigInt& BigInt::operator++() {
-	*this += 1;
-
-	return *this;
-}
-
-void BigInt::operator-=(const BigInt& other) {
-	for (int i = 0; i < SIZE; i++)
-		digits[i] -= other.digits[i];
-
-	for (int i = 0; i < SIZE - 1; i++) {
-		if (digits[i] < BASE) {
-			digits[i] += BASE;
-			digits[i + 1]--;
-		}
-	}
-}
-
-BigInt BigInt::operator-(const BigInt& other) {
-	BigInt N(*this);
-	N -= other;
-
-	return N;
-}
-
-BigInt& BigInt::operator--() {
-	*this -= 1;
-
-	return *this;
-}
-
 bool BigInt::operator==(const BigInt& other) const {
 	for (int i = 0; i < SIZE; i++)
 		if (digits[i] != other.digits[i])
+			return false;
+	return true;
+}
+
+bool BigInt::operator==(const int& other) const
+{
+	BigInt oth(other);
+	for (int i = 1; i < SIZE; i++)
+		if (digits[i] != oth.digits[i])
+			return false;
+	return true;
+}
+
+bool BigInt::operator==(const long long& other) const
+{
+	BigInt oth(other);
+	for (int i = 1; i < SIZE; i++)
+		if (digits[i] != oth.digits[i])
 			return false;
 	return true;
 }

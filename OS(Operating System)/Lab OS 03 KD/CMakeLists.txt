@@ -1,4 +1,4 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿﻿cmake_minimum_required (VERSION 3.8)
 
 # Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
 if (POLICY CMP0141)
@@ -16,7 +16,7 @@ set(THREADS_PREFER_PTHREAD_FLAG OFF)
 find_package(Threads REQUIRED)
 
 add_executable(Main main.h main.cpp
-                ThreadData.h, ThreadData.cpp,
+                thread_data.h thread_data.cpp
                 core.h core.cpp 
                 marker.h marker.cpp)
 

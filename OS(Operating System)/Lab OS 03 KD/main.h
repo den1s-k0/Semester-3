@@ -1,10 +1,10 @@
-﻿#pragma once
+﻿﻿#pragma once
 
 #include <iostream>
 #include <vector>
 #include <windows.h>
 #include "core.h"
-#include "ThreadData.h"
+#include "thread_data.h"
 
 using namespace std;
 
@@ -14,4 +14,3 @@ namespace MAX_SIZES_OF_ARRAYS {
 	const int MAX_COUNT_OF_THREADS = 10000;
 
 }
-

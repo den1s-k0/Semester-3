@@ -19,6 +19,4 @@ struct ThreadData {
     ThreadData();
 
     ThreadData(int id, int* arr, int size, HANDLE start, HANDLE pause, HANDLE control);
-
-    ~ThreadData();
 };

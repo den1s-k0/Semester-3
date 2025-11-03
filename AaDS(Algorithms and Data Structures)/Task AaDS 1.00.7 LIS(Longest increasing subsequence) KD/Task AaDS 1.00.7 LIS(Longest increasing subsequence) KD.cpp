@@ -5,8 +5,6 @@
 using namespace std;
 
 int LowerBound(vector<int>& mas, int x) {
-	//if (mas.empty()) return 0;
-
 	int left = 0, right = mas.size(), k;
 	while (left < right) {
 		k = (left + right) / 2;

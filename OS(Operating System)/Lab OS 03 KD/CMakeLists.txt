@@ -1,4 +1,4 @@
-﻿﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
 # Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
 if (POLICY CMP0141)
@@ -17,8 +17,8 @@ find_package(Threads REQUIRED)
 
 add_executable(Main main.h main.cpp
                 thread_data.h thread_data.cpp
-                core.h core.cpp 
-                marker.h marker.cpp)
+                marker.h marker.cpp
+                core.h core.cpp)
 
 target_link_libraries(Main PRIVATE Threads::Threads)
 
@@ -41,7 +41,9 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(TestCore test_core.cpp test_core.h 
-                core.h core.cpp)
+                core.h core.cpp
+                thread_data.h thread_data.cpp
+                marker.h marker.cpp)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET TestCore PROPERTY CXX_STANDARD 17)

@@ -7,7 +7,6 @@
 #include "thread_data.h"
 #include "marker.h"
 
-
 using namespace std;
 
 namespace ReturnCoreCodes {

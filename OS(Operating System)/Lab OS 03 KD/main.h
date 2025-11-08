@@ -13,4 +13,3 @@ namespace MAX_SIZES_OF_ARRAYS {
 	const int MAX_COUNT_OF_THREADS = 10000;
 
 }
-

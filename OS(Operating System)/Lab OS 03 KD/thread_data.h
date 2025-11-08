@@ -9,6 +9,7 @@ struct ThreadData {
     int thread_id;
     int* array;
     int array_size;
+    boolean is_break;
 
     HANDLE start_event;
     HANDLE pause_event;
@@ -17,7 +18,6 @@ struct ThreadData {
 
 
     int marked_count;
-    int failed_index;
 
     ThreadData();
 

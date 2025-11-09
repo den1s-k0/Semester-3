@@ -40,23 +40,30 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(TestCore test_core.cpp test_core.h 
+
+add_executable(TestThreadData test_thread_data.cpp test_thread_data.h 
+                thread_data.h thread_data.cpp)
+add_executable(TestMarker test_marker.cpp test_marker.h 
                 core.h core.cpp
                 thread_data.h thread_data.cpp
                 marker.h marker.cpp)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-    set_property(TARGET TestCore PROPERTY CXX_STANDARD 17)
+    set_property(TARGET TestThreadData PROPERTY CXX_STANDARD 17)
+    set_property(TARGET TestMarker PROPERTY CXX_STANDARD 17)
 endif()
 
-target_link_libraries(TestCore PRIVATE gtest gtest_main Threads::Threads)
+target_link_libraries(TestThreadData PRIVATE gtest gtest_main Threads::Threads)
+target_link_libraries(TestMarker PRIVATE gtest gtest_main Threads::Threads)
 
 
 include(GoogleTest)
-gtest_discover_tests(TestCore)
+gtest_discover_tests(TestThreadData)
+gtest_discover_tests(TestMarker)
+
 
 add_custom_target(run_all_tests ALL
 COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
- DEPENDS TestCore
+ DEPENDS  TestThreadData TestMarker
   COMMENT "Running all tests..."
 )

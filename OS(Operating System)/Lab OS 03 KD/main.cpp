@@ -26,7 +26,7 @@ int main()
 
 		int ind;
 		do {
-			ind = cinIntLessEqualN(threads_count, "Enter ID of an element that will be complited: ");
+			ind = cinIntLessEqualN(threads_count, "Enter ID of an existed element that will be complited: ");
 			ind--;
 		} while (threads_data[ind].is_break);
 
@@ -36,6 +36,8 @@ int main()
 
 		continueThreads(threads_data, threads_handles, threads_count);
 	}
+
+	cout << "\nProgramm is complited.\n";
 
 	delete[] array;
 	delete[] threads_data;

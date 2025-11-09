@@ -1,7 +1,6 @@
 #pragma once
 
 #include <gtest/gtest.h>
+#include <windows.h>
 #include "core.h"
-
-using namespace std;
-
+#include "marker.h"

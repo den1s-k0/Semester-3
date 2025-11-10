@@ -11,10 +11,11 @@ int FindSet(int* mas, int x) {
 }
 
 int FindSetRec(int* mas, int x) {
-    int ind = x;
+    int ind = x, r = ind;
     if (mas[ind] > 0)
-        mas[ind] = FindSet(mas, mas[ind]);
-    return ind;
+        r = FindSet(mas, mas[ind]);
+    mas[ind] = r;
+    return r;
 }
 
 int Union(int* mas, int x, int y, int& count) {
@@ -54,3 +55,4 @@ int main()
     delete[] cities;
     return 0;
 }
+

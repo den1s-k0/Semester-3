@@ -4,16 +4,16 @@
 using namespace std;
 
 void AddToHashTable(int* mas, bool* f_mas, int m, int c, int x) {
-	int h = - 1;
-	for (int i = 0; h < m; i++) {
-		h = ((x % m) + c * i) % m;
-		if (mas[h] == x)
-			break;
-		if (f_mas[h] == false) {
+	int h, base = x % m;
+	for (int i = 0; i < m; i++) {
+		h = (base + c * i) % m;
+		if (!f_mas[h]) {
 			mas[h] = x;
 			f_mas[h] = true;
 			break;
 		}
+		if (mas[h] == x)
+			break;
 	}
 }
 

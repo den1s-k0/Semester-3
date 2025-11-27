@@ -80,7 +80,7 @@ public abstract class CafeMenuPosition{
         );
     }
 
-    protected abstract void getInfo();
+    public abstract void getInfo();
     abstract String getDishType();
 }
 

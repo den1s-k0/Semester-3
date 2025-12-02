@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <map>
 #include <queue>
@@ -335,7 +335,6 @@ vector<T> SearchTree<T>::FindAllKBFS(Node* root)
 {
 	queue<Node*> q;
 	vector<T> result;
-	vector<T> level_result;
 	bool is_find = false;
 	Node* current;
 	int count;
@@ -346,7 +345,7 @@ vector<T> SearchTree<T>::FindAllKBFS(Node* root)
 			current = q.front();
 			q.pop();
 			if (current->isK) {
-				level_result.push_back(current->data);
+				result.push_back(current->data);
 				is_find = true;
 			}
 			if (current->left)
@@ -354,8 +353,6 @@ vector<T> SearchTree<T>::FindAllKBFS(Node* root)
 			if (current->right)
 				q.push(current->right);
 		}
-		if (is_find)
-			result = level_result;
 	}
 	return result;
 }

@@ -1,8 +1,8 @@
-import menus.Menu;
+import menus.ConsoleMenu;
 
 public class Main {
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        ConsoleMenu menu = new ConsoleMenu();
         menu.start();
     }
 }

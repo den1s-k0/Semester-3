@@ -74,13 +74,38 @@ public abstract class CafeMenuPosition{
         return String.format(
             "ID: %d | Название: %s | Категория: %s\n" +
             "Цена: %.2f руб. | Калории: %.1f ккал\n" +
-            "Дата добавления: %s",
+            "Дата добавления: %s\n",
             id, name, category, price, calories,
             new SimpleDateFormat("dd.MM.yyyy").format(addedDate)
         );
     }
 
     public abstract void getInfo();
-    abstract String getDishType();
+    public abstract String getDishType();
+
+    public String toFileString() {
+        return String.format("%s;%s;%.2f;%s;%.1f;%s",
+                id, name, price, category, calories,
+                new SimpleDateFormat("dd.MM.yyyy").format(addedDate));
+    }
+
+    protected void fromFileString(String[] parts) {
+        if (parts.length < 6) {
+            throw new IllegalArgumentException("Недостаточно полей: " + parts.length);
+        }
+
+        this.id = Integer.parseInt(parts[0]);
+        this.name = parts[1];
+        this.price = Double.parseDouble(parts[2].replace(',', '.'));
+        this.category = parts[3];
+        this.calories = Double.parseDouble(parts[4].replace(',', '.'));
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            this.addedDate = sdf.parse(parts[5]);
+        } catch (Exception e) {
+            this.addedDate = new Date();
+        }
+    }
 }
 

@@ -1,5 +1,8 @@
 package cafe_menu;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Drink extends CafeMenuPosition{
 
     public int getVolume() {
@@ -30,7 +33,7 @@ public class Drink extends CafeMenuPosition{
     @Override
     public String toString(){
         return String.format(
-           super.toString() + "Объем: %d мл.\n", volume,
+           super.toString() + "Объем: %d мл.\nТип: %s", volume,
                 isAlcoholic() ? "Алкогольный" : "Безалкогольный"
         );
     }
@@ -47,7 +50,40 @@ public class Drink extends CafeMenuPosition{
     }
 
     @Override
-    String getDishType() {
+    public String getDishType() {
         return (isAlcoholic() ? "Алкогольный" : "Безалкогольный") + " напиток ";
+    }
+
+    @Override
+    public String toFileString() {
+        return "DRINK;" + super.toFileString() + String.format(";%d;%b",
+                volume, alcoholic);
+    }
+
+    public static Drink fromFileString(String line) {
+        String[] parts = line.split(";");
+        if (!parts[0].equals("DRINK") || parts.length != 9) {
+            throw new IllegalArgumentException("Неверный формат строки для Drink");
+        }
+
+        parts[3] = parts[3].replace(',', '.');
+        parts[5] = parts[5].replace(',', '.');
+
+        Drink drink = new Drink(
+                Integer.parseInt(parts[1]),
+                parts[2],
+                Double.parseDouble(parts[3]),
+                parts[4],
+                Double.parseDouble(parts[5]),
+                Integer.parseInt(parts[7]),
+                Boolean.parseBoolean(parts[8])
+        );
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            drink.setAddedDate(sdf.parse(parts[6]));
+        } catch (Exception e) {}
+
+        return drink;
     }
 }

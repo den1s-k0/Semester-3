@@ -1,6 +1,6 @@
 package rolls;
 
-import CafeMenu.CafeMenuPosition;
+import cafe_menu.CafeMenuPosition;
 
 import java.util.Comparator;
 import java.util.List;

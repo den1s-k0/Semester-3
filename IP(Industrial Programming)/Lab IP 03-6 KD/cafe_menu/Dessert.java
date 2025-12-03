@@ -1,5 +1,7 @@
 package cafe_menu;
 
+import java.text.SimpleDateFormat;
+
 public class Dessert extends CafeMenuPosition{
 
     public int getMass() {
@@ -30,7 +32,7 @@ public class Dessert extends CafeMenuPosition{
     @Override
     public String toString(){
         return String.format(
-                super.toString() + "Масса: %d мл.\n", mass,
+                super.toString() + "Масса: %d мл.\nТип: %s", mass,
                 isSweet() ? "Сладкий" : "Кислый"
         );
     }
@@ -47,7 +49,40 @@ public class Dessert extends CafeMenuPosition{
     }
 
     @Override
-    String getDishType() {
+    public String getDishType() {
         return (isSweet() ? "Сладкий" : "Кислый") + " десерт ";
+    }
+
+    @Override
+    public String toFileString() {
+        return "DESSERT;" + super.toFileString() + String.format(";%d;%b",
+                mass, sweet);
+    }
+
+    public static Dessert fromFileString(String line) {
+        String[] parts = line.split(";");
+        if (!parts[0].equals("DESSERT") || parts.length != 9) {
+            throw new IllegalArgumentException("Неверный формат строки для Dessert");
+        }
+
+        parts[3] = parts[3].replace(',', '.');
+        parts[5] = parts[5].replace(',', '.');
+
+        Dessert dessert = new Dessert(
+                Integer.parseInt(parts[1]),
+                parts[2],
+                Double.parseDouble(parts[3]),
+                parts[4],
+                Double.parseDouble(parts[5]),
+                Integer.parseInt(parts[7]),
+                Boolean.parseBoolean(parts[8])
+        );
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            dessert.setAddedDate(sdf.parse(parts[6]));
+        } catch (Exception e) {}
+
+        return dessert;
     }
 }

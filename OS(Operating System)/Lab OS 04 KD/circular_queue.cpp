@@ -1,6 +1,4 @@
 #include "circular_queue.h"
-#include <algorithm>
-#include <cstring>
 
 CircularQueue::CircularQueue(const string& path, int capacity)
     : file_path(path), queue_capacity(capacity) {
@@ -13,8 +11,8 @@ bool CircularQueue::initialize() {
     ofstream file(file_path, ios::binary);
     if (!file) return false;
 
-    int total_size = queue_capacity * MAX_MESSAGE_SIZE;
-    file.seekp(total_size + HEADER_SIZE - 1);
+    int total_size = queue_capacity * QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE;
+    file.seekp(total_size + QUEUE_SIZES_CODES::HEADER_SIZE - 1);
     char zero = '\0';
     file.write(&zero, 1);
 
@@ -45,16 +43,16 @@ bool CircularQueue::write_message(const string& message) {
 }
 
 bool CircularQueue::read_raw_message(int index, string& result) {
-    char buffer[MAX_MESSAGE_SIZE + 1] = { 0 };
+    char buffer[QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE + 1] = { 0 };
     fstream file(file_path, ios::in | ios::out | ios::binary);
 
     if (!file) return false;
 
-    file.seekg(HEADER_SIZE + index * MAX_MESSAGE_SIZE, ios::beg);
-    file.read(buffer, MAX_MESSAGE_SIZE);
+    file.seekg(QUEUE_SIZES_CODES::HEADER_SIZE + index * QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE, ios::beg);
+    file.read(buffer, QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE);
     file.close();
 
-    buffer[MAX_MESSAGE_SIZE] = '\0';
+    buffer[QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE] = '\0';
     result = buffer;
 
     size_t null_pos = result.find('\0');
@@ -66,16 +64,16 @@ bool CircularQueue::read_raw_message(int index, string& result) {
 }
 
 bool CircularQueue::write_raw_message(int index, const string& message) {
-    char buffer[MAX_MESSAGE_SIZE] = { 0 };
+    char buffer[QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE] = { 0 };
     fstream file(file_path, ios::in | ios::out | ios::binary);
 
     if (!file) return false;
 
-    size_t copy_size = min(message.size(), static_cast<size_t>(MAX_MESSAGE_SIZE));
+    size_t copy_size = min(message.size(), static_cast<size_t>(QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE));
     memcpy(buffer, message.c_str(), copy_size);
 
-    file.seekp(HEADER_SIZE + index * MAX_MESSAGE_SIZE, ios::beg);
-    file.write(buffer, MAX_MESSAGE_SIZE);
+    file.seekp(QUEUE_SIZES_CODES::HEADER_SIZE + index * QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE, ios::beg);
+    file.write(buffer, QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE);
     file.close();
 
     return true;

@@ -1,4 +1,10 @@
 #pragma once
 
-const int MAX_MESSAGE_SIZE = 20;
-const int HEADER_SIZE = sizeof(int) * 2;
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+string cinString(int min, int max, string message);
+
+int cinInt(int min, int max, string message);

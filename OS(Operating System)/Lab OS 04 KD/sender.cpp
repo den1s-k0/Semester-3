@@ -1,17 +1,12 @@
 #include "sender.h"
-#include <iostream>
-#include <cstdlib>
+
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    return sender_main(argc, argv);
-}
-
-int sender_main(int argc, char* argv[]) {
     if (argc < 4) {
         cerr << "Usage: Sender.exe <filename> <readyEventName> <queueCapacity>\n";
-        return 1;
+        return SENDER_RETURN_CODES::ARGC_ERROR;
     }
 
     string file_name = argv[1];
@@ -21,14 +16,14 @@ int sender_main(int argc, char* argv[]) {
     HANDLE hReadyEvent = OpenEventA(EVENT_MODIFY_STATE, FALSE, event_name.c_str());
     if (!hReadyEvent) {
         cerr << "Failed to open ready event\n";
-        return 1;
+        return SENDER_RETURN_CODES::EVENT_ERROR;
     }
 
     HANDLE hMutex, hEmpty, hFull;
     if (!open_sync_objects(file_name, hMutex, hEmpty, hFull)) {
         cerr << "Failed to open synchronization objects\n";
         CloseHandle(hReadyEvent);
-        return 1;
+        return SENDER_RETURN_CODES::SYNC_OBJECT_ERROR;
     }
 
     SetEvent(hReadyEvent);
@@ -37,25 +32,16 @@ int sender_main(int argc, char* argv[]) {
     bool active = true;
 
     while (active) {
-        cout << "\n1. Send message\n";
-        cout << "2. Exit\n";
-        cout << "Enter choice: ";
+        cout << "\n1. Send message\n"
+             << "2. Exit\n";
+        int choice = cinInt(SENDER_CHOICE_CODES::SEND_CHOICE, SENDER_CHOICE_CODES::EXIT_CHOICE, "Enter choice: ");
 
-        int choice;
-        cin >> choice;
-        cin.ignore(1000, '\n');
-
-        if (choice == 1) {
+        if (choice == SENDER_CHOICE_CODES::SEND_CHOICE) {
             WaitForSingleObject(hEmpty, INFINITE);
             WaitForSingleObject(hMutex, INFINITE);
 
-            cout << "Enter message (max " << MAX_MESSAGE_SIZE << " chars): ";
-            string message;
-            getline(cin, message);
-
-            if (message.size() > MAX_MESSAGE_SIZE) {
-                message = message.substr(0, MAX_MESSAGE_SIZE);
-            }
+            string message = cinString(SENDER_SIZES_CODES::MIN_STRING_SIZE, SENDER_SIZES_CODES::MAX_MESSAGE_SIZE,
+                "Enter message (max " + to_string(SENDER_SIZES_CODES::MAX_MESSAGE_SIZE) + " chars): ");
 
             if (queue.write_message(message)) {
                 cout << "Message sent\n";
@@ -68,7 +54,7 @@ int sender_main(int argc, char* argv[]) {
             ReleaseSemaphore(hFull, 1, nullptr);
 
         }
-        else if (choice == 2) {
+        else if (choice == SENDER_CHOICE_CODES::EXIT_CHOICE) {
             active = false;
         }
     }
@@ -79,5 +65,5 @@ int sender_main(int argc, char* argv[]) {
     CloseHandle(hFull);
 
     cout << "Sender finished\n";
-    return 0;
+    return SENDER_RETURN_CODES::SUCCESS;
 }

@@ -1,38 +1,17 @@
 ﻿#include "receiver.h"
-#include <iostream>
-#include <vector>
-
-using namespace std;
 
 int main() {
-    return receiver_main();
-}
+    string file_name = cinString(1, 100, "Enter file name: ");
 
-int receiver_main() {
-    cout << "Enter file name: ";
-    string file_name;
-    getline(cin, file_name);
-
-    if (file_name.empty()) {
-        cerr << "Empty file name\n";
-        return 1;
-    }
-
-    cout << "Enter queue capacity: ";
-    int queue_capacity;
-    cin >> queue_capacity;
+    int queue_capacity = cinInt(RECEIVER_SIZES_CODES::MIN_QUEUE_CAPACITY, RECEIVER_SIZES_CODES::MAX_QUEUE_CAPACITY, "Enter queue capacity: ");
 
     CircularQueue queue(file_name, queue_capacity);
     if (!queue.initialize()) {
         cerr << "Cannot create file\n";
-        return 1;
+        return RECEIVER_RETURN_CODES::FILE_ERROR;
     }
 
-    cin.ignore(1000, '\n');
-
-    cout << "Enter number of sender processes: ";
-    int sender_count;
-    cin >> sender_count;
+    int sender_count = cinInt(RECEIVER_SIZES_CODES::MIN_SENDER_COUNT, RECEIVER_SIZES_CODES::MAX_SENDER_COUNT, "Enter number of sender processes: ");
 
     HANDLE hMutex, hEmpty, hFull;
     if (!create_sync_objects(file_name, queue_capacity, hMutex, hEmpty, hFull)) {
@@ -46,7 +25,7 @@ int receiver_main() {
         ready_events[i] = create_ready_event(file_name, i);
         if (!ready_events[i]) {
             cerr << "CreateEvent failed\n";
-            return 1;
+            return RECEIVER_RETURN_CODES::EVENT_ERROR;
         }
 
         string event_name = file_name + "_rdy_" + to_string(i + 1);
@@ -55,25 +34,23 @@ int receiver_main() {
 
         if (!start_sender_process(command, processes[i])) {
             cerr << "Cannot create process " << i + 1 << "\n";
-            return 1;
+            return RECEIVER_RETURN_CODES::PROCESS_ERROR;
         }
     }
 
     if (WaitForMultipleObjects(sender_count, ready_events, TRUE, INFINITE) == WAIT_FAILED) {
         cerr << "WaitForMultipleObjects failed\n";
-        return 1;
+        return RECEIVER_RETURN_CODES::WAIT_ERROR;
     }
 
     bool running = true;
     while (running) {
-        cout << "\n1. Read message\n";
-        cout << "2. Exit\n";
-        cout << "Enter choice: ";
+        cout << "\n1. Read message\n"
+             << "2. Exit\n";
 
-        int choice;
-        cin >> choice;
+        int choice = cinInt(RECEIVER_CHOICE_CODES::READ_CHOICE, RECEIVER_CHOICE_CODES::EXIT_CHOICE, "Enter choice: ");
 
-        if (choice == 1) {
+        if (choice == RECEIVER_CHOICE_CODES::READ_CHOICE) {
             WaitForSingleObject(hFull, INFINITE);
             WaitForSingleObject(hMutex, INFINITE);
 
@@ -88,7 +65,7 @@ int receiver_main() {
             ReleaseMutex(hMutex);
             ReleaseSemaphore(hEmpty, 1, nullptr);
         }
-        else if (choice == 2) {
+        else if (choice == RECEIVER_CHOICE_CODES::EXIT_CHOICE) {
             running = false;
         }
     }
@@ -108,5 +85,5 @@ int receiver_main() {
     CloseHandle(hFull);
 
     cout << "Receiver finished\n";
-    return 0;
+    return RECEIVER_RETURN_CODES::SUCCESS;
 }

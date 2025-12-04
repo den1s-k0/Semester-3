@@ -15,12 +15,12 @@ endif()
 add_executable(Receiver receiver.h receiver.cpp
                 circular_queue.h circular_queue.cpp
                 process_manager.h process_manager.cpp
-                common.h)
+                common.h common.cpp)
 
 add_executable(Sender sender.h sender.cpp
                 circular_queue.h circular_queue.cpp
                 process_manager.h process_manager.cpp
-                common.h)
+                common.h common.cpp)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
 		set_property(TARGET Receiver PROPERTY CXX_STANDARD 14)
@@ -41,9 +41,8 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-
 add_executable(TestCommon test_common.cpp test_common.h 
-                common.h)
+                common.h common.cpp)
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

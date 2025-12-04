@@ -1,9 +1,17 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <algorithm>
+#include <cstring>
 #include "common.h"
 
 using namespace std;
+
+namespace QUEUE_SIZES_CODES {
+    const int MAX_MESSAGE_SIZE = 20;
+
+    const int HEADER_SIZE = sizeof(int) * 2;
+}
 
 class CircularQueue {
     string file_path;

@@ -9,7 +9,6 @@ using namespace std;
 
 namespace QUEUE_SIZES_CODES {
     const int MAX_MESSAGE_SIZE = 20;
-
     const int HEADER_SIZE = sizeof(int) * 2;
 }
 
@@ -23,6 +22,8 @@ public:
     bool initialize();
     bool read_message(string& result);
     bool write_message(const string& message);
+    bool is_empty();
+    bool is_full();
 
 private:
     bool read_raw_message(int index, string& result);

@@ -1,6 +1,5 @@
 #include "sender.h"
 
-
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -33,11 +32,12 @@ int main(int argc, char* argv[]) {
 
     while (active) {
         cout << "\n1. Send message\n"
-             << "2. Exit\n";
+            << "2. Exit\n";
         int choice = cinInt(SENDER_CHOICE_CODES::SEND_CHOICE, SENDER_CHOICE_CODES::EXIT_CHOICE, "Enter choice: ");
 
         if (choice == SENDER_CHOICE_CODES::SEND_CHOICE) {
-            WaitForSingleObject(hEmpty, INFINITE);
+            waitWithMessage(hEmpty, "Queue is full. Waiting for empty space...");
+
             WaitForSingleObject(hMutex, INFINITE);
 
             string message = cinString(SENDER_SIZES_CODES::MIN_STRING_SIZE, SENDER_SIZES_CODES::MAX_MESSAGE_SIZE,

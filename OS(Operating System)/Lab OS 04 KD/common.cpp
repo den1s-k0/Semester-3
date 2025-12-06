@@ -29,3 +29,14 @@ int cinInt(int min, int max, string message) {
 	cin.ignore(10000, '\n');
 	return n;
 }
+
+bool waitWithMessage(HANDLE handle, const string& wait_message) {
+	DWORD wait_result = WaitForSingleObject(handle, 100);
+
+	if (wait_result == WAIT_TIMEOUT) {
+		cout << wait_message << endl;
+		wait_result = WaitForSingleObject(handle, INFINITE);
+	}
+
+	return (wait_result == WAIT_OBJECT_0);
+}

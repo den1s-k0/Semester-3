@@ -44,14 +44,16 @@ int main() {
     }
 
     bool running = true;
+
     while (running) {
         cout << "\n1. Read message\n"
-             << "2. Exit\n";
+            << "2. Exit\n";
 
         int choice = cinInt(RECEIVER_CHOICE_CODES::READ_CHOICE, RECEIVER_CHOICE_CODES::EXIT_CHOICE, "Enter choice: ");
 
         if (choice == RECEIVER_CHOICE_CODES::READ_CHOICE) {
-            WaitForSingleObject(hFull, INFINITE);
+            waitWithMessage(hFull, "Queue is empty. Waiting for messages...");
+
             WaitForSingleObject(hMutex, INFINITE);
 
             string message;

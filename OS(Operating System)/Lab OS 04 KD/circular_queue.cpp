@@ -42,6 +42,34 @@ bool CircularQueue::write_message(const string& message) {
     return write_tail(tail);
 }
 
+bool CircularQueue::is_empty() {
+    int head = 0, tail = 0;
+
+    fstream file(file_path, ios::in | ios::binary);
+    if (!file) return true;
+
+    file.seekg(0, ios::beg);
+    file.read(reinterpret_cast<char*>(&head), sizeof(head));
+    file.read(reinterpret_cast<char*>(&tail), sizeof(tail));
+    file.close();
+
+    return head == tail;
+}
+
+bool CircularQueue::is_full() {
+    int head = 0, tail = 0;
+
+    fstream file(file_path, ios::in | ios::binary);
+    if (!file) return false;
+
+    file.seekg(0, ios::beg);
+    file.read(reinterpret_cast<char*>(&head), sizeof(head));
+    file.read(reinterpret_cast<char*>(&tail), sizeof(tail));
+    file.close();
+
+    return ((tail + 1) % queue_capacity) == head;
+}
+
 bool CircularQueue::read_raw_message(int index, string& result) {
     char buffer[QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE + 1] = { 0 };
     fstream file(file_path, ios::in | ios::out | ios::binary);

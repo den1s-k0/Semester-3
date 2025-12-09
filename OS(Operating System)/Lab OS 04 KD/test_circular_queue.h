@@ -1,8 +1,6 @@
 #pragma once
 
 #include <gtest/gtest.h>
-#include <sstream>
-#include <thread>
-#include "common.h"
+#include "circular_queue.h"
 
 using namespace std;

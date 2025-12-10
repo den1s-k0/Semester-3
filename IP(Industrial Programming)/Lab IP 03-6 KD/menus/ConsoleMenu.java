@@ -5,6 +5,7 @@ import file_manager.FileManager;
 import rolls.ListRoll;
 import rolls.MapRoll;
 import rolls.Rolls;
+import java.util.Date;
 
 import java.util.*;
 
@@ -59,32 +60,279 @@ public class ConsoleMenu {
     }
 
     private void loadFromFile() {
-        System.out.print("Введите имя файла (по умолчанию menu.txt): ");
+        System.out.println("\n=== ЗАГРУЗКА ИЗ ФАЙЛА ===");
+
+        System.out.println("Выберите формат файла:");
+        System.out.println("1. TXT");
+        System.out.println("2. XML");
+        System.out.println("3. JSON");
+        System.out.print("> ");
+
+        String formatChoice = scanner.nextLine().trim();
+        FileManager.FileFormat format = FileManager.FileFormat.TXT;
+
+        switch (formatChoice) {
+            case "1": format = FileManager.FileFormat.TXT; break;
+            case "2": format = FileManager.FileFormat.XML; break;
+            case "3": format = FileManager.FileFormat.JSON; break;
+            default:
+                System.out.println("Неверный выбор. Используется TXT.");
+                format = FileManager.FileFormat.TXT;
+        }
+
+        System.out.println("\nФайл архивирован?");
+        System.out.println("1. Нет");
+        System.out.println("2. ZIP");
+        System.out.println("3. JAR");
+        System.out.print("> ");
+
+        String compressionChoice = scanner.nextLine().trim();
+        FileManager.Compression compression = FileManager.Compression.NONE;
+
+        switch (compressionChoice) {
+            case "1": compression = FileManager.Compression.NONE; break;
+            case "2": compression = FileManager.Compression.ZIP; break;
+            case "3": compression = FileManager.Compression.JAR; break;
+            default:
+                System.out.println("Неверный выбор. Без архивации.");
+                compression = FileManager.Compression.NONE;
+        }
+
+        System.out.println("\nФайл зашифрован?");
+        System.out.println("1. Нет");
+        System.out.println("2. AES");
+        System.out.print("> ");
+
+        String encryptionChoice = scanner.nextLine().trim();
+        FileManager.Encryption encryption = FileManager.Encryption.NONE;
+
+        switch (encryptionChoice) {
+            case "1": encryption = FileManager.Encryption.NONE; break;
+            case "2": encryption = FileManager.Encryption.AES; break;
+            default:
+                System.out.println("Неверный выбор. Без шифрования.");
+                encryption = FileManager.Encryption.NONE;
+        }
+
+        System.out.print("\nВведите имя файла: ");
         String filename = scanner.nextLine().trim();
 
         if (filename.isEmpty()) {
-            filename = "menu.txt";
+            String extension = "";
+            switch (format) {
+                case TXT: extension = ".txt"; break;
+                case XML: extension = ".xml"; break;
+                case JSON: extension = ".json"; break;
+            }
+
+            if (compression != FileManager.Compression.NONE) {
+                extension = compression == FileManager.Compression.ZIP ? ".zip" : ".jar";
+            }
+
+            filename = "menu" + extension;
+            System.out.println("Используется имя по умолчанию: " + filename);
+        } else {
+            String extension = "";
+            if (compression != FileManager.Compression.NONE) {
+                extension = compression == FileManager.Compression.ZIP ? ".zip" : ".jar";
+            } else {
+                switch (format) {
+                    case TXT: extension = ".txt"; break;
+                    case XML: extension = ".xml"; break;
+                    case JSON: extension = ".json"; break;
+                }
+            }
+
+            boolean hasCorrectExtension = false;
+            if (compression != FileManager.Compression.NONE) {
+                hasCorrectExtension = filename.toLowerCase().endsWith(extension);
+            } else {
+                hasCorrectExtension =
+                        (format == FileManager.FileFormat.TXT && filename.toLowerCase().endsWith(".txt")) ||
+                                (format == FileManager.FileFormat.XML && filename.toLowerCase().endsWith(".xml")) ||
+                                (format == FileManager.FileFormat.JSON && filename.toLowerCase().endsWith(".json"));
+            }
+
+            if (!hasCorrectExtension) {
+                filename = removeExtensions(filename);
+                filename += extension;
+            }
         }
+        List<CafeMenuPosition> positions = FileManager.readFromFile(
+                filename, format, compression, encryption
+        );
 
-        List<CafeMenuPosition> positions = FileManager.readFromFile(filename);
+        if (!positions.isEmpty()) {
+            System.out.println("\nЧто сделать с текущими данными?");
+            System.out.println("1. Очистить и загрузить новые");
+            System.out.println("2. Добавить к существующим");
+            System.out.println("3. Отменить загрузку");
+            System.out.print("> ");
 
-        currentRoll.Clear();
-        for (CafeMenuPosition position : positions) {
-            if (FileManager.validatePosition(position)) {
-                currentRoll.AddElement(position);
+            String action = scanner.nextLine().trim();
+
+            switch (action) {
+                case "1":
+                    currentRoll.Clear();
+                    for (CafeMenuPosition position : positions) {
+                        currentRoll.AddElement(position);
+                    }
+                    System.out.println("Данные загружены (старые удалены)");
+                    break;
+                case "2":
+                    for (CafeMenuPosition position : positions) {
+                        currentRoll.AddElement(position);
+                    }
+                    System.out.println("Данные добавлены к существующим");
+                    break;
+                case "3":
+                    System.out.println("Загрузка отменена");
+                    break;
+                default:
+                    System.out.println("Неверный выбор. Загрузка отменена.");
             }
         }
     }
 
     private void saveToFile() {
-        System.out.print("Введите имя файла (по умолчанию menu.txt): ");
+        System.out.println("\n=== СОХРАНЕНИЕ В ФАЙЛ ===");
+
+        if (currentRoll.GetSize() == 0) {
+            System.out.println("Нет данных для сохранения!");
+            return;
+        }
+
+        System.out.println("Выберите формат файла:");
+        System.out.println("1. TXT");
+        System.out.println("2. XML");
+        System.out.println("3. JSON");
+        System.out.print("> ");
+
+        String formatChoice = scanner.nextLine().trim();
+        FileManager.FileFormat format = FileManager.FileFormat.TXT;
+
+        switch (formatChoice) {
+            case "1": format = FileManager.FileFormat.TXT; break;
+            case "2": format = FileManager.FileFormat.XML; break;
+            case "3": format = FileManager.FileFormat.JSON; break;
+            default:
+                System.out.println("Неверный выбор. Используется TXT.");
+                format = FileManager.FileFormat.TXT;
+        }
+
+        System.out.println("\nАрхивировать файл?");
+        System.out.println("1. Нет");
+        System.out.println("2. ZIP");
+        System.out.println("3. JAR");
+        System.out.print("> ");
+
+        String compressionChoice = scanner.nextLine().trim();
+        FileManager.Compression compression = FileManager.Compression.NONE;
+
+        switch (compressionChoice) {
+            case "1": compression = FileManager.Compression.NONE; break;
+            case "2": compression = FileManager.Compression.ZIP; break;
+            case "3": compression = FileManager.Compression.JAR; break;
+            default:
+                System.out.println("Неверный выбор. Без архивации.");
+                compression = FileManager.Compression.NONE;
+        }
+
+        System.out.println("\nЗашифровать файл?");
+        System.out.println("1. Нет");
+        System.out.println("2. AES");
+        System.out.print("> ");
+
+        String encryptionChoice = scanner.nextLine().trim();
+        FileManager.Encryption encryption = FileManager.Encryption.NONE;
+
+        switch (encryptionChoice) {
+            case "1": encryption = FileManager.Encryption.NONE; break;
+            case "2": encryption = FileManager.Encryption.AES; break;
+            default:
+                System.out.println("Неверный выбор. Без шифрования.");
+                encryption = FileManager.Encryption.NONE;
+        }
+
+        System.out.print("\nВведите имя файла: ");
         String filename = scanner.nextLine().trim();
 
         if (filename.isEmpty()) {
-            filename = "menu.txt";
+            String extension = "";
+            switch (format) {
+                case TXT: extension = ".txt"; break;
+                case XML: extension = ".xml"; break;
+                case JSON: extension = ".json"; break;
+            }
+
+            if (compression != FileManager.Compression.NONE) {
+                extension = compression == FileManager.Compression.ZIP ? ".zip" : ".jar";
+            }
+
+            filename = "menu_" + new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + extension;
+            System.out.println("Используется имя: " + filename);
+        } else {
+            String extension = "";
+            if (compression != FileManager.Compression.NONE) {
+                extension = compression == FileManager.Compression.ZIP ? ".zip" : ".jar";
+            } else {
+                switch (format) {
+                    case TXT: extension = ".txt"; break;
+                    case XML: extension = ".xml"; break;
+                    case JSON: extension = ".json"; break;
+                }
+            }
+
+            boolean hasCorrectExtension = false;
+            if (compression != FileManager.Compression.NONE) {
+                hasCorrectExtension = filename.toLowerCase().endsWith(extension);
+            } else {
+                hasCorrectExtension =
+                        (format == FileManager.FileFormat.TXT && filename.toLowerCase().endsWith(".txt")) ||
+                                (format == FileManager.FileFormat.XML && filename.toLowerCase().endsWith(".xml")) ||
+                                (format == FileManager.FileFormat.JSON && filename.toLowerCase().endsWith(".json"));
+            }
+
+            if (!hasCorrectExtension) {
+                filename = removeExtensions(filename);
+                filename += extension;
+            }
         }
 
-        FileManager.writeToFile(filename, currentRoll.GetAllElements());
+        System.out.println("\nПараметры сохранения:");
+        System.out.println("Формат: " + format);
+        System.out.println("Архивация: " + compression);
+        System.out.println("Шифрование: " + encryption);
+        System.out.println("Файл: " + filename);
+        System.out.println("Количество позиций: " + currentRoll.GetSize());
+
+        System.out.print("\nПодтвердить сохранение? (да/нет): ");
+        String confirm = scanner.nextLine().trim();
+
+        if (confirm.equalsIgnoreCase("да")) {
+            FileManager.writeToFile(
+                    filename,
+                    currentRoll.GetAllElements(),
+                    format,
+                    compression,
+                    encryption
+            );
+            System.out.println("Данные сохранены!");
+        } else {
+            System.out.println("Сохранение отменено.");
+        }
+    }
+
+    private String removeExtensions(String filename) {
+        String[] extensions = {".txt", ".xml", ".json", ".zip", ".jar"};
+        String lowerFilename = filename.toLowerCase();
+
+        for (String ext : extensions) {
+            if (lowerFilename.endsWith(ext)) {
+                return filename.substring(0, filename.length() - ext.length());
+            }
+        }
+        return filename;
     }
 
     private void addPosition() {

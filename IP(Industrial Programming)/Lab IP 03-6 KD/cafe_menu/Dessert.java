@@ -32,7 +32,7 @@ public class Dessert extends CafeMenuPosition{
     @Override
     public String toString(){
         return String.format(
-                super.toString() + "Масса: %d мл.\nТип: %s", mass,
+                super.toString() + "Масса: %d г.\nТип: %s", mass,
                 isSweet() ? "Сладкий" : "Кислый"
         );
     }

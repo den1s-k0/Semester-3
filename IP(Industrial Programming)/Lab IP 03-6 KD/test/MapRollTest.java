@@ -51,11 +51,10 @@ class MapRollTest {
     void testMapRollSort() {
         Drink juice = new Drink(3, "Juice", 120.0, "Напитки", 100.0, 300, false);
 
-        drinkRoll.AddElement(coffee); // 150
-        drinkRoll.AddElement(juice);  // 120
-        drinkRoll.AddElement(tea);    // 100
+        drinkRoll.AddElement(coffee);
+        drinkRoll.AddElement(juice);
+        drinkRoll.AddElement(tea);
 
-        // Сортировка по названию
         Comparator<Drink> nameComparator = Comparator.comparing(Drink::getName);
         drinkRoll.sort(nameComparator);
 

@@ -37,9 +37,9 @@ class ListRollTest {
     @Test
     void testAddDuplicateElement() {
         drinkRoll.AddElement(coffee);
-        drinkRoll.AddElement(coffee); // Попытка добавить тот же элемент
+        drinkRoll.AddElement(coffee);
 
-        assertEquals(1, drinkRoll.GetSize()); // Размер должен остаться 1
+        assertEquals(1, drinkRoll.GetSize());
     }
 
     @Test
@@ -50,7 +50,7 @@ class ListRollTest {
         assertTrue(drinkRoll.DeleteElement(coffee));
         assertEquals(1, drinkRoll.GetSize());
 
-        assertFalse(drinkRoll.DeleteElement(coffee)); // Уже удален
+        assertFalse(drinkRoll.DeleteElement(coffee));
     }
 
     @Test
@@ -92,18 +92,17 @@ class ListRollTest {
     void testSort() {
         Drink juice = new Drink(3, "Juice", 120.0, "Напитки", 100.0, 300, false);
 
-        drinkRoll.AddElement(coffee); // 150
-        drinkRoll.AddElement(juice);  // 120
-        drinkRoll.AddElement(tea);    // 100
+        drinkRoll.AddElement(coffee);
+        drinkRoll.AddElement(juice);
+        drinkRoll.AddElement(tea);
 
-        // Сортировка по цене (возрастание)
         Comparator<Drink> priceComparator = Comparator.comparingDouble(Drink::getPrice);
         drinkRoll.sort(priceComparator);
 
         List<Drink> sorted = drinkRoll.GetAllElements();
-        assertEquals(100.0, sorted.get(0).getPrice(), 0.001); // Tea
-        assertEquals(120.0, sorted.get(1).getPrice(), 0.001); // Juice
-        assertEquals(150.0, sorted.get(2).getPrice(), 0.001); // Coffee
+        assertEquals(100.0, sorted.get(0).getPrice(), 0.001);
+        assertEquals(120.0, sorted.get(1).getPrice(), 0.001);
+        assertEquals(150.0, sorted.get(2).getPrice(), 0.001);
     }
 
     @Test
@@ -111,7 +110,6 @@ class ListRollTest {
         drinkRoll.AddElement(coffee);
         drinkRoll.AddElement(tea);
 
-        // Просто проверяем, что метод не выбрасывает исключений
         assertDoesNotThrow(() -> drinkRoll.PrintList());
     }
 

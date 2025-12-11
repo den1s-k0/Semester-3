@@ -37,11 +37,9 @@ class ConsoleMenuTest {
 
         ConsoleMenu menu = new ConsoleMenu();
 
-        // Запускаем в отдельном потоке, так как start() блокирующий
         Thread thread = new Thread(() -> menu.start());
         thread.start();
 
-        // Даем время на выполнение
         try {
             Thread.sleep(100);
             thread.interrupt();

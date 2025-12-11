@@ -430,7 +430,6 @@ public class ConsoleMenu {
             String name = readStringWithDefault("Название [" + oldPosition.getName() + "]: ", oldPosition.getName());
             double price = readDoubleWithDefault("Цена [" + oldPosition.getPrice() + "]: ", oldPosition.getPrice());
 
-            // Для категории предлагаем выбрать из вариантов
             String currentCategory = oldPosition.getCategory();
             String category = editCategory(currentCategory);
 
@@ -637,12 +636,10 @@ public class ConsoleMenu {
                 if (price < minPrice) minPrice = price;
                 if (price > maxPrice) maxPrice = price;
 
-                // Считаем по типам
                 if (p instanceof Drink) drinks++;
                 else if (p instanceof MainCourse) mains++;
                 else if (p instanceof Dessert) desserts++;
 
-                // Считаем по категориям
                 String category = p.getCategory();
                 categoryCount.put(category, categoryCount.getOrDefault(category, 0) + 1);
             }
@@ -729,7 +726,6 @@ public class ConsoleMenu {
         return null;
     }
 
-    // ... вспомогательные методы для ввода остаются без изменений ...
     private int readInt(String prompt) {
         while (true) {
             System.out.print(prompt);

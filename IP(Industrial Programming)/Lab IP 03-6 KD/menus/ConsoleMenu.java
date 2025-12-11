@@ -35,6 +35,7 @@ public class ConsoleMenu {
                 case "7" -> findPosition();
                 case "8" -> switchStorage();
                 case "9" -> showStats();
+                case "10" -> sortPositions();
                 case "0" -> {
                     System.out.println("Выход...");
                     return;
@@ -55,6 +56,7 @@ public class ConsoleMenu {
         System.out.println("7. Найти позицию");
         System.out.println("8. Переключить хранилище");
         System.out.println("9. Статистика");
+        System.out.println("10. Сортировка");
         System.out.println("0. Выход");
         System.out.print("> ");
     }
@@ -661,6 +663,60 @@ public class ConsoleMenu {
             System.out.println("Максимальная цена: " + String.format("%.2f руб.", maxPrice));
             System.out.println("Общая стоимость всех позиций: " + String.format("%.2f руб.", totalPrice));
         }
+    }
+
+    private void sortPositions() {
+        System.out.println("\n=== СОРТИРОВКА ПОЗИЦИЙ ===");
+
+        if (currentRoll.GetSize() == 0) {
+            System.out.println("Список пуст");
+            return;
+        }
+
+        System.out.println("Выберите поле для сортировки:");
+        System.out.println("1. По ID");
+        System.out.println("2. По названию");
+        System.out.println("3. По цене (возрастание)");
+        System.out.println("4. По цене (убывание)");
+        System.out.println("5. По калориям");
+        System.out.println("6. По дате добавления");
+        System.out.print("> ");
+
+        String choice = scanner.nextLine().trim();
+        Comparator<CafeMenuPosition> comparator = null;
+
+        switch (choice) {
+            case "1":
+                comparator = Comparator.comparingInt(CafeMenuPosition::getId);
+                System.out.println("Сортировка по ID");
+                break;
+            case "2":
+                comparator = Comparator.comparing(CafeMenuPosition::getName, String.CASE_INSENSITIVE_ORDER);
+                System.out.println("Сортировка по названию");
+                break;
+            case "3":
+                comparator = Comparator.comparingDouble(CafeMenuPosition::getPrice);
+                System.out.println("Сортировка по цене (возрастание)");
+                break;
+            case "4":
+                comparator = Comparator.comparingDouble(CafeMenuPosition::getPrice).reversed();
+                System.out.println("Сортировка по цене (убывание)");
+                break;
+            case "5":
+                comparator = Comparator.comparingDouble(CafeMenuPosition::getCalories);
+                System.out.println("Сортировка по калориям");
+                break;
+            case "6":
+                comparator = Comparator.comparing(CafeMenuPosition::getAddedDate);
+                System.out.println("Сортировка по дате добавления");
+                break;
+            default:
+                System.out.println("Неверный выбор");
+                return;
+        }
+
+        currentRoll.sort(comparator);
+        System.out.println("Сортировка выполнена!");
     }
 
     private CafeMenuPosition findById(int id) {

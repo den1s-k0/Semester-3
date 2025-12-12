@@ -9,7 +9,7 @@ using namespace std;
 
 namespace QUEUE_SIZES_CODES {
     const int MAX_MESSAGE_SIZE = 20;
-    const int HEADER_SIZE = sizeof(int) * 2;
+    const int HEADER_SIZE = sizeof(int) * 3;
 }
 
 class CircularQueue {
@@ -18,18 +18,20 @@ class CircularQueue {
 
 public:
     CircularQueue(const string& path, int capacity);
-
     bool initialize();
     bool read_message(string& result);
     bool write_message(const string& message);
     bool is_empty();
     bool is_full();
+    int get_count();
 
 private:
     bool read_raw_message(int index, string& result);
     bool write_raw_message(int index, const string& message);
     bool read_head(int& head);
-    int read_tail();
+    bool read_tail(int& tail);
+    bool read_count(int& count);
     bool write_head(int head);
     bool write_tail(int tail);
+    bool write_count(int count);
 };

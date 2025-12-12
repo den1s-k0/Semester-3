@@ -4,17 +4,14 @@ TEST(CommonFunctionsTest, CinString_ValidInput) {
     stringstream input("Hello\n");
     stringstream output;
 
-    // Save original buffers
     streambuf* orig_cin = cin.rdbuf();
     streambuf* orig_cout = cout.rdbuf();
 
-    // Redirect streams
     cin.rdbuf(input.rdbuf());
     cout.rdbuf(output.rdbuf());
 
     string result = cinString(1, 10, "Enter text: ");
 
-    // Restore buffers
     cin.rdbuf(orig_cin);
     cout.rdbuf(orig_cout);
 
@@ -126,7 +123,7 @@ TEST(CommonFunctionsTest, WaitWithMessage_ImmediateSuccess) {
     CloseHandle(testEvent);
 
     EXPECT_TRUE(result);
-    EXPECT_EQ("", output.str()); // No waiting message should appear
+    EXPECT_EQ("", output.str());
 }
 
 TEST(CommonFunctionsTest, WaitWithMessage_TimeoutAndSuccess) {
@@ -137,7 +134,6 @@ TEST(CommonFunctionsTest, WaitWithMessage_TimeoutAndSuccess) {
     streambuf* orig_cout = cout.rdbuf();
     cout.rdbuf(output.rdbuf());
 
-    // Start waiting in a separate thread
     thread signalThread([testEvent]() {
         this_thread::sleep_for(chrono::milliseconds(150));
         SetEvent(testEvent);

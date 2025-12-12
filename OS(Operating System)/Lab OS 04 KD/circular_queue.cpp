@@ -7,6 +7,7 @@ CircularQueue::CircularQueue(const string& path, int capacity)
 bool CircularQueue::initialize() {
     int head = 0;
     int tail = 0;
+    int count = 0;
 
     ofstream file(file_path, ios::binary);
     if (!file) return false;
@@ -19,60 +20,72 @@ bool CircularQueue::initialize() {
     file.seekp(0);
     file.write(reinterpret_cast<char*>(&head), sizeof(head));
     file.write(reinterpret_cast<char*>(&tail), sizeof(tail));
+    file.write(reinterpret_cast<char*>(&count), sizeof(count));
     file.close();
 
     return true;
 }
 
 bool CircularQueue::read_message(string& result) {
-    int head;
-    if (!read_head(head)) return false;
+    int head, count;
 
-    if (!read_raw_message(head, result)) return false;
+    if (!read_head(head) || !read_count(count)) {
+        return false;
+    }
+
+    if (count <= 0) {
+        return false;
+    }
+
+    if (!read_raw_message(head, result)) {
+        return false;
+    }
 
     head = (head + 1) % queue_capacity;
-    return write_head(head);
+    count--;
+
+    return write_head(head) && write_count(count);
 }
 
 bool CircularQueue::write_message(const string& message) {
-    int tail = read_tail();
-    if (!write_raw_message(tail, message)) return false;
+    int tail, count;
+
+    if (!read_tail(tail) || !read_count(count)) {
+        return false;
+    }
+
+    if (count >= queue_capacity) {
+        return false;
+    }
+
+    if (!write_raw_message(tail, message)) {
+        return false;
+    }
 
     tail = (tail + 1) % queue_capacity;
-    return write_tail(tail);
+    count++;
+
+    return write_tail(tail) && write_count(count);
 }
 
 bool CircularQueue::is_empty() {
-    int head = 0, tail = 0;
-
-    fstream file(file_path, ios::in | ios::binary);
-    if (!file) return true;
-
-    file.seekg(0, ios::beg);
-    file.read(reinterpret_cast<char*>(&head), sizeof(head));
-    file.read(reinterpret_cast<char*>(&tail), sizeof(tail));
-    file.close();
-
-    return head == tail;
+    int count;
+    return read_count(count) && (count == 0);
 }
 
 bool CircularQueue::is_full() {
-    int head = 0, tail = 0;
+    int count;
+    return read_count(count) && (count >= queue_capacity);
+}
 
-    fstream file(file_path, ios::in | ios::binary);
-    if (!file) return false;
-
-    file.seekg(0, ios::beg);
-    file.read(reinterpret_cast<char*>(&head), sizeof(head));
-    file.read(reinterpret_cast<char*>(&tail), sizeof(tail));
-    file.close();
-
-    return ((tail + 1) % queue_capacity) == head;
+int CircularQueue::get_count() {
+    int count;
+    return read_count(count) ? count : -1;
 }
 
 bool CircularQueue::read_raw_message(int index, string& result) {
     char buffer[QUEUE_SIZES_CODES::MAX_MESSAGE_SIZE + 1] = { 0 };
-    fstream file(file_path, ios::in | ios::out | ios::binary);
+    fstream file(file_path, ios::in | ios::binary);
 
     if (!file) return false;
 
@@ -108,48 +121,55 @@ bool CircularQueue::write_raw_message(int index, const string& message) {
 }
 
 bool CircularQueue::read_head(int& head) {
-    fstream file(file_path, ios::in | ios::out | ios::binary);
-
+    fstream file(file_path, ios::in | ios::binary);
     if (!file) return false;
-
     file.seekg(0, ios::beg);
-    file.read(reinterpret_cast<char*>(&head), sizeof(head));
+    bool success = static_cast<bool>(file.read(reinterpret_cast<char*>(&head), sizeof(head)));
     file.close();
-
-    return true;
+    return success;
 }
 
-int CircularQueue::read_tail() {
-    int tail;
-    fstream file(file_path, ios::in | ios::out | ios::binary);
-
+bool CircularQueue::read_tail(int& tail) {
+    fstream file(file_path, ios::in | ios::binary);
+    if (!file) return false;
     file.seekg(sizeof(int), ios::beg);
-    file.read(reinterpret_cast<char*>(&tail), sizeof(tail));
+    bool success = static_cast<bool>(file.read(reinterpret_cast<char*>(&tail), sizeof(tail)));
     file.close();
+    return success;
+}
 
-    return tail;
+bool CircularQueue::read_count(int& count) {
+    fstream file(file_path, ios::in | ios::binary);
+    if (!file) return false;
+    file.seekg(sizeof(int) * 2, ios::beg);
+    bool success = static_cast<bool>(file.read(reinterpret_cast<char*>(&count), sizeof(count)));
+    file.close();
+    return success;
 }
 
 bool CircularQueue::write_head(int head) {
     fstream file(file_path, ios::in | ios::out | ios::binary);
-
     if (!file) return false;
-
     file.seekp(0, ios::beg);
-    file.write(reinterpret_cast<char*>(&head), sizeof(head));
+    bool success = static_cast<bool>(file.write(reinterpret_cast<char*>(&head), sizeof(head)));
     file.close();
-
-    return true;
+    return success;
 }
 
 bool CircularQueue::write_tail(int tail) {
     fstream file(file_path, ios::in | ios::out | ios::binary);
-
     if (!file) return false;
-
     file.seekp(sizeof(int), ios::beg);
-    file.write(reinterpret_cast<char*>(&tail), sizeof(tail));
+    bool success = static_cast<bool>(file.write(reinterpret_cast<char*>(&tail), sizeof(tail)));
     file.close();
+    return success;
+}
 
-    return true;
+bool CircularQueue::write_count(int count) {
+    fstream file(file_path, ios::in | ios::out | ios::binary);
+    if (!file) return false;
+    file.seekp(sizeof(int) * 2, ios::beg);
+    bool success = static_cast<bool>(file.write(reinterpret_cast<char*>(&count), sizeof(count)));
+    file.close();
+    return success;
 }

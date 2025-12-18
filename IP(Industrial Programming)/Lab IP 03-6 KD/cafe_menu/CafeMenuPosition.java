@@ -57,7 +57,7 @@ public abstract class CafeMenuPosition{
     protected double price;
     protected String category;
     protected double calories;
-    protected Date addedDate; // дата добавления в меню
+    protected Date addedDate;
 
     public CafeMenuPosition(int ID, String NAME, double PRICE, String CATEGORY,
                             double CALORIES){

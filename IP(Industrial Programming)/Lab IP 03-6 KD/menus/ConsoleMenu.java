@@ -1,7 +1,10 @@
 package menus;
 
+import builders.DessertBuilder;
+import builders.DrinkBuilder;
+import builders.MainCourseBuilder;
 import cafe_menu.*;
-import file_manager.FileManager;
+import file_managers.FileManager;
 import rolls.ListRoll;
 import rolls.MapRoll;
 import rolls.Rolls;
@@ -357,28 +360,59 @@ public class ConsoleMenu {
 
             String name = readString("Название: ");
             double price = readDouble("Цена: ");
-
-            String category = getCategoryByType(typeChoice);
-
             double calories = readDouble("Калории: ");
+
+            String defaultCategory = getCategoryByType(typeChoice);
+            System.out.print("Категория [" + defaultCategory + "]: ");
+            String category = scanner.nextLine().trim();
+            if (category.isEmpty()) {
+                category = defaultCategory;
+            }
 
             switch (typeChoice) {
                 case "1":
                     int volume = readInt("Объем (мл): ");
                     boolean alcoholic = readBoolean("Алкогольный (да/нет): ");
-                    position = new Drink(id, name, price, category, calories, volume, alcoholic);
+
+                    position = new DrinkBuilder()
+                            .setId(id)
+                            .setName(name)
+                            .setPrice(price)
+                            .setCategory(category)
+                            .setCalories(calories)
+                            .setVolume(volume)
+                            .setAlcoholic(alcoholic)
+                            .build();
                     break;
 
                 case "2":
                     int mass1 = readInt("Масса (г): ");
                     boolean vegetarian = readBoolean("Вегетарианский (да/нет): ");
-                    position = new MainCourse(id, name, price, category, calories, mass1, vegetarian);
+
+                    position = new MainCourseBuilder()
+                            .setId(id)
+                            .setName(name)
+                            .setPrice(price)
+                            .setCategory(category)
+                            .setCalories(calories)
+                            .setMass(mass1)
+                            .setVegetarian(vegetarian)
+                            .build();
                     break;
 
                 case "3":
                     int mass2 = readInt("Масса (г): ");
                     boolean sweet = readBoolean("Сладкий (да/нет): ");
-                    position = new Dessert(id, name, price, category, calories, mass2, sweet);
+
+                    position = new DessertBuilder()
+                            .setId(id)
+                            .setName(name)
+                            .setPrice(price)
+                            .setCategory(category)
+                            .setCalories(calories)
+                            .setMass(mass2)
+                            .setSweet(sweet)
+                            .build();
                     break;
 
                 default:
@@ -386,11 +420,11 @@ public class ConsoleMenu {
                     return;
             }
 
-            if (FileManager.validatePosition(position)) {
-                currentRoll.AddElement(position);
-                System.out.println("Позиция добавлена успешно!");
-            }
+            currentRoll.AddElement(position);
+            System.out.println("Позиция добавлена успешно!");
 
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка валидации: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
         }
@@ -424,16 +458,13 @@ public class ConsoleMenu {
         }
 
         System.out.println("Найдена позиция: " + oldPosition.getName());
-        System.out.println("Введите новые данные (оставьте пустым для сохранения старого значения):");
 
         try {
             String name = readStringWithDefault("Название [" + oldPosition.getName() + "]: ", oldPosition.getName());
             double price = readDoubleWithDefault("Цена [" + oldPosition.getPrice() + "]: ", oldPosition.getPrice());
-
-            String currentCategory = oldPosition.getCategory();
-            String category = editCategory(currentCategory);
-
             double calories = readDoubleWithDefault("Калории [" + oldPosition.getCalories() + "]: ", oldPosition.getCalories());
+
+            String category = editCategory(oldPosition.getCategory());
 
             CafeMenuPosition newPosition = null;
 
@@ -441,26 +472,58 @@ public class ConsoleMenu {
                 Drink drink = (Drink) oldPosition;
                 int volume = readIntWithDefault("Объем [" + drink.getVolume() + "]: ", drink.getVolume());
                 boolean alcoholic = readBooleanWithDefault("Алкогольный [" + drink.isAlcoholic() + "]: ", drink.isAlcoholic());
-                newPosition = new Drink(id, name, price, category, calories, volume, alcoholic);
+
+                newPosition = new DrinkBuilder()
+                        .setId(id)
+                        .setName(name)
+                        .setPrice(price)
+                        .setCategory(category)
+                        .setCalories(calories)
+                        .setVolume(volume)
+                        .setAlcoholic(alcoholic)
+                        .setAddedDate(drink.getAddedDate())
+                        .build();
 
             } else if (oldPosition instanceof MainCourse) {
                 MainCourse main = (MainCourse) oldPosition;
                 int mass = readIntWithDefault("Масса [" + main.getMass() + "]: ", main.getMass());
                 boolean vegetarian = readBooleanWithDefault("Вегетарианский [" + main.isVegetarian() + "]: ", main.isVegetarian());
-                newPosition = new MainCourse(id, name, price, category, calories, mass, vegetarian);
+
+                newPosition = new MainCourseBuilder()
+                        .setId(id)
+                        .setName(name)
+                        .setPrice(price)
+                        .setCategory(category)
+                        .setCalories(calories)
+                        .setMass(mass)
+                        .setVegetarian(vegetarian)
+                        .setAddedDate(main.getAddedDate())
+                        .build();
 
             } else if (oldPosition instanceof Dessert) {
                 Dessert dessert = (Dessert) oldPosition;
                 int mass = readIntWithDefault("Масса [" + dessert.getMass() + "]: ", dessert.getMass());
                 boolean sweet = readBooleanWithDefault("Сладкий [" + dessert.isSweet() + "]: ", dessert.isSweet());
-                newPosition = new Dessert(id, name, price, category, calories, mass, sweet);
+
+                newPosition = new DessertBuilder()
+                        .setId(id)
+                        .setName(name)
+                        .setPrice(price)
+                        .setCategory(category)
+                        .setCalories(calories)
+                        .setMass(mass)
+                        .setSweet(sweet)
+                        .setAddedDate(dessert.getAddedDate())
+                        .build();
             }
 
-            if (newPosition != null && FileManager.validatePosition(newPosition)) {
+            if (newPosition != null) {
                 currentRoll.ReplaceElement(newPosition);
                 System.out.println("Позиция обновлена успешно!");
             }
 
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка валидации: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
         }

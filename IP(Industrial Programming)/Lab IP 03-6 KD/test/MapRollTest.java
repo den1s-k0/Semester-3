@@ -44,7 +44,7 @@ class MapRollTest {
         assertTrue(drinkRoll.DeleteElement(coffee));
         assertEquals(1, drinkRoll.GetSize());
 
-        assertFalse(drinkRoll.DeleteElement(coffee)); // Уже удален
+        assertFalse(drinkRoll.DeleteElement(coffee));
     }
 
     @Test

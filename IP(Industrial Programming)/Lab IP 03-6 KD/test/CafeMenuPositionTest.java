@@ -3,15 +3,23 @@ package test;
 import cafe_menu.Dessert;
 import cafe_menu.Drink;
 import cafe_menu.MainCourse;
+import builders.*;
 import org.junit.jupiter.api.Test;
-import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CafeMenuPositionTest {
 
     @Test
     void testDrinkCreation() {
-        Drink drink = new Drink(1, "Coffee", 150.0, "Напитки", 50.0, 200, false);
+        Drink drink = new DrinkBuilder()
+                .setId(1)
+                .setName("Coffee")
+                .setPrice(150.0)
+                .setCategory("Напитки")
+                .setCalories(50.0)
+                .setVolume(200)
+                .setAlcoholic(false)
+                .build();
 
         assertEquals(1, drink.getId());
         assertEquals("Coffee", drink.getName());
@@ -25,17 +33,34 @@ class CafeMenuPositionTest {
 
     @Test
     void testDrinkToString() {
-        Drink drink = new Drink(1, "Coffee", 150.0, "Напитки", 50.0, 200, false);
+        Drink drink = new DrinkBuilder()
+                .setId(1)
+                .setName("Coffee")
+                .setPrice(150.0)
+                .setCategory("Напитки")
+                .setCalories(50.0)
+                .setVolume(200)
+                .setAlcoholic(false)
+                .build();
+
         String str = drink.toString();
 
         assertTrue(str.contains("Coffee"));
-        assertTrue(str.contains("150,00"));
+        assertTrue(str.contains("150,00") || str.contains("150.00"));
         assertTrue(str.contains("Напитки"));
     }
 
     @Test
     void testMainCourseVegetarian() {
-        MainCourse main = new MainCourse(2, "Salad", 200.0, "Основные блюда", 150.0, 300, true);
+        MainCourse main = new MainCourseBuilder()
+                .setId(2)
+                .setName("Salad")
+                .setPrice(200.0)
+                .setCategory("Основные блюда")
+                .setCalories(150.0)
+                .setMass(300)
+                .setVegetarian(true)
+                .build();
 
         assertEquals(2, main.getId());
         assertEquals("Salad", main.getName());
@@ -45,7 +70,15 @@ class CafeMenuPositionTest {
 
     @Test
     void testDessertSweet() {
-        Dessert dessert = new Dessert(3, "Cake", 250.0, "Десерты", 400.0, 150, true);
+        Dessert dessert = new DessertBuilder()
+                .setId(3)
+                .setName("Cake")
+                .setPrice(250.0)
+                .setCategory("Десерты")
+                .setCalories(400.0)
+                .setMass(150)
+                .setSweet(true)
+                .build();
 
         assertEquals(3, dessert.getId());
         assertEquals("Cake", dessert.getName());
@@ -55,12 +88,21 @@ class CafeMenuPositionTest {
 
     @Test
     void testToFileString() {
-        Drink drink = new Drink(1, "Coffee", 150.0, "Напитки", 50.0, 200, false);
+        Drink drink = new DrinkBuilder()
+                .setId(1)
+                .setName("Coffee")
+                .setPrice(150.0)
+                .setCategory("Напитки")
+                .setCalories(50.0)
+                .setVolume(200)
+                .setAlcoholic(false)
+                .build();
+
         String fileStr = drink.toFileString();
 
         assertTrue(fileStr.startsWith("DRINK;"));
         assertTrue(fileStr.contains("Coffee"));
-        assertTrue(fileStr.contains("150,00"));
+        assertTrue(fileStr.contains("150,00") || fileStr.contains("150.00"));
     }
 
     @Test

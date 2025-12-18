@@ -1,7 +1,8 @@
 package test;
 
 import cafe_menu.*;
-import file_manager.FileManager;
+import builders.*;
+import file_managers.FileManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
@@ -87,7 +88,15 @@ class FileManagerTest {
 
     @Test
     void testValidatePosition() {
-        Drink validDrink = new Drink(1, "Coffee", 150.0, "Напитки", 50.0, 200, false);
+        Drink validDrink = new DrinkBuilder()
+                .setId(1)
+                .setName("Coffee")
+                .setPrice(150.0)
+                .setCategory("Напитки")
+                .setCalories(50.0)
+                .setVolume(200)
+                .setAlcoholic(false)
+                .build();
         assertTrue(FileManager.validatePosition(validDrink));
 
         Drink invalidPrice = new Drink(2, "Tea", -100.0, "Напитки", 5.0, 250, false);
@@ -103,9 +112,39 @@ class FileManagerTest {
     private List<CafeMenuPosition> createTestPositions() {
         List<CafeMenuPosition> positions = new ArrayList<>();
 
-        positions.add(new Drink(1, "Coffee", 150.0, "Напитки", 50.0, 200, false));
-        positions.add(new MainCourse(2, "Salad", 200.0, "Основные блюда", 150.0, 300, true));
-        positions.add(new Dessert(3, "Cake", 250.0, "Десерты", 400.0, 150, true));
+        Drink coffee = new DrinkBuilder()
+                .setId(1)
+                .setName("Coffee")
+                .setPrice(150.0)
+                .setCategory("Напитки")
+                .setCalories(50.0)
+                .setVolume(200)
+                .setAlcoholic(false)
+                .build();
+
+        MainCourse salad = new MainCourseBuilder()
+                .setId(2)
+                .setName("Salad")
+                .setPrice(200.0)
+                .setCategory("Основные блюда")
+                .setCalories(150.0)
+                .setMass(300)
+                .setVegetarian(true)
+                .build();
+
+        Dessert cake = new DessertBuilder()
+                .setId(3)
+                .setName("Cake")
+                .setPrice(250.0)
+                .setCategory("Десерты")
+                .setCalories(400.0)
+                .setMass(150)
+                .setSweet(true)
+                .build();
+
+        positions.add(coffee);
+        positions.add(salad);
+        positions.add(cake);
 
         return positions;
     }

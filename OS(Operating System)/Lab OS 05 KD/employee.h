@@ -10,6 +10,9 @@ struct Employee {
     int id;
     char name[10];
     double hours;
+
+    Employee();
+    Employee(int empId, const string& empName, double empHours);
 };
 
 ostream& operator<<(ostream& out, Employee& emp);

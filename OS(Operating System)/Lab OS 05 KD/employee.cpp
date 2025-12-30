@@ -1,5 +1,18 @@
 #include "employee.h"
 
+Employee::Employee() : id(0), hours(0.0) {
+    memset(name, 0, sizeof(name));
+}
+
+Employee::Employee(int empId, const string& empName, double empHours)
+    : id(empId), hours(empHours) {
+    memset(name, 0, sizeof(name));
+    if (!empName.empty()) {
+        size_t copySize = min(empName.size(), static_cast<size_t>(9));
+        strncpy_s(name, empName.c_str(), copySize);
+    }
+}
+
 ostream& operator<<(ostream& out, Employee& emp) {
     out << "ID: " << emp.id << endl;
     out << "Name: " << emp.name << endl;

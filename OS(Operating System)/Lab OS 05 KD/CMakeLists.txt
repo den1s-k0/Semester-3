@@ -55,11 +55,16 @@ function(add_lab_test target_name source_file extra_sources)
     gtest_discover_tests(${target_name})
 endfunction()
 
-
+add_lab_test(TestEmployee test_employee.cpp "test_employee.h;employee.cpp;employee.h")
+add_lab_test(TestFileManager test_file_manager.cpp "test_file_manager.h;file_manager.cpp;file_manager.h;employee.cpp;employee.h")
+add_lab_test(TestRecordLock test_record_lock.cpp "test_record_lock.h;record_lock.cpp;record_lock.h")
+add_lab_test(TestConstants test_constants.cpp "test_constants.h;shared_constants.h")
+add_lab_test(TestPipeManager test_pipe_manager.cpp "test_pipe_manager.h;pipe_manager.cpp;pipe_manager.h")
+add_lab_test(TestProcessManager test_process_manager.cpp "test_process_manager.h;process_manager.cpp;process_manager.h;record_lock.cpp;record_lock.h;employee.cpp;employee.h;pipe_manager.cpp;pipe_manager.h")
 
 
 add_custom_target(run_all_tests ALL
 COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
- DEPENDS  
+ DEPENDS  TestEmployee TestFileManager TestRecordLock TestConstants TestPipeManager TestProcessManager
   COMMENT "Running all tests..."
 )

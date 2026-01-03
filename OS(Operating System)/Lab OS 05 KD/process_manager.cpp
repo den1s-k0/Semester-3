@@ -1,12 +1,5 @@
 #include "process_manager.h"
 
-struct ThreadParams {
-    string pipeName;
-    int employeeCount;
-    RecordLock* locks;
-    string fileName;
-};
-
 bool ProcessInfo::launchClientProcess(const string& pipeName, int employeeCount) {
     string command = "Client.exe \"" + pipeName + "\" " + to_string(employeeCount);
 

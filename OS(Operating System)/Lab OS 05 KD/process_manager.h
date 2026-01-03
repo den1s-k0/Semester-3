@@ -10,6 +10,13 @@
 
 using namespace std;
 
+struct ThreadParams {
+    string pipeName;
+    int employeeCount;
+    RecordLock* locks;
+    string fileName;
+};
+
 struct ProcessInfo {
     PROCESS_INFORMATION pi;
     bool launchClientProcess(const string& pipeName, int employeeCount);
